@@ -1,0 +1,10 @@
+<h1>Collections du Museum du Havre</h1>
+<div ng-repeat="collection in collections">
+	<h2>{{collection.name}}</h2>
+
+	<p>id : {{collection.id}}</p>
+
+	<h3>{{collection.objects.length}} objets</h3>
+
+	<a href="#/objects/{{collection.id}}">Voir les objets</a>
+</div>
