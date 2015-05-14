@@ -1,10 +1,14 @@
-<h1>Collections du Museum du Havre</h1>
-<div ng-repeat="collection in collections">
-	<h2>{{collection.name}}</h2>
+<div ng-show="loading">Chargement...</div>
+<div ng-hide="loading">
 
-	<p>id : {{collection.id}}</p>
+	<h1>Collections du Museum du Havre</h1>
+	<div ng-repeat="collection in collections">
+		<h2>{{collection.name}}</h2>
 
-	<h3>{{collection.objects.length}} objets</h3>
+		<p>id : {{collection.id}}</p>
 
-	<a href="#/objects/{{collection.id}}">Voir les objets</a>
+		<h3>{{collection.objects.length}} objets</h3>
+
+		<a href="#/objects/{{collection.id}}">Voir les objets</a>
+	</div>
 </div>

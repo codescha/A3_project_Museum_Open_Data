@@ -1,15 +1,17 @@
-<a href="#/">Retour</a><br>
+<a href="#/">Retour aux collections</a><br>
+<div ng-show="loading">Chargement...</div>
+<div ng-hide="loading">
 
 	{{" Recherche contenant : " + query}}
-<input type="text" ng-model="query" /><br>
+	<input type="text" ng-model="query" /><br>
 
-Tri
-<select ng-model="order">
-	<option value="name">par nom</option>
-	<option value="object">par numéro d'inventaire</option>
-</select>
+	Tri
+	<select ng-model="order">
+		<option value="name">par nom</option>
+		<option value="object">par numéro d'inventaire</option>
+	</select>
 
-<h1>{{title}}</h1>
+	<h1>{{title}}</h1>
 
 	<div ng-repeat="object in objects | filter:{name:query} | orderBy:order">
 	<p>
