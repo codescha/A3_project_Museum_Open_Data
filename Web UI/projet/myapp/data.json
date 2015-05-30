@@ -2,7 +2,7 @@
 	{
 		"id": "0",
 		"name": "Paléontologie Croizé",
-		"objects": [
+		"users": [
 			{"id":0,"name":"Bivalves","registry":"2015.7.1","kind":"","species":"","location":"La Hève, France (76)","date":"Kimméridgien"},
 			{"id":1,"name":"Aulacostephanus ","registry":"2015.7.2","kind":"Aulacostephanus","species":"","location":"La Hève, France (76)","date":"Kimméridgien"},
 			{"id":2,"name":"Aptychus ","registry":"2015.7.3","kind":"Aptychus","species":"","location":"La Hève, France (76)","date":"Kimméridgien"},

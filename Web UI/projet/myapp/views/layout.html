@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html ng-app="MODapp">
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div ng-view=""></div>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+
+	<script>
+	var app = angular.module('MODapp', ['ngRoute']);
+	app.config(function($routeProvider) {
+		$routeProvider
+			.when('/', {templateUrl: 'partials/home.ejs',
+				controller: 'CollectionsCtrl',
+				access: {requiredLogin: false}})
+			.when('/objects/:id', {templateUrl: 'partials/objects.ejs',
+				controller: 'ObjectsCtrl',
+					access: {requiredLogin: true}})
+			.when('/login', {templateUrl: 'partials/login.ejs',
+				controller: 'LoginCtrl',
+					access: {requiredLogin: true}})
+			.otherwise({redirectTo : '/'});
+	});
+
+	app.factory('CollectionFactory', function($http, $q){
+		var factory = {
+			collections : false,			
+			getCollections : function(){
+				var deferred = $q.defer();
+				if(factory.collections != false){
+					deferred.resolve(factory.collections);
+				} else {
+					$http.get('data.json')
+						.success(function(data, status){
+							factory.collections = data;
+							deferred.resolve(factory.collections);
+						}).error(function(data, status){
+								deferred.reject('Erreur de chergement du fichier');
+						});
+				}
+				return deferred.promise;
+			},
+			getCollection : function(id){
+				var deferred = $q.defer();
+				var collection = {};
+				var collections = factory.getCollections().then(function(collections){
+					angular.forEach(factory.collections, function(value, key){
+						if(value.id == id){
+						collection = value
+						}					
+					});
+					deferred.resolve(collection);
+				}, function(msg){
+					deferred.reject(msg);
+				});
+				return deferred.promise;
+			}
+		};
+		return factory;
+	})
+
+	app.controller('CollectionsCtrl', function($scope, CollectionFactory) {
+		$scope.loading = true;
+		$scope.collections = CollectionFactory.getCollections().then(function(collections){
+				$scope.loading = false;
+				$scope.collections = collections;
+		}, function(msg){
+			alert(msg);
+		});
+	})
+
+	app.controller('ObjectsCtrl', function($scope, CollectionFactory, $routeParams) {
+		$scope.loading = true;
+		var collection =  CollectionFactory.getCollection($routeParams.id).then(function(collection){
+			$scope.loading = false;
+			$scope.title = collection.name;
+			$scope.objects = collection.objects;	
+		}, function(msg){
+			alert(msg);
+		});
+		
+	})
+
+	app.controller('LoginCtrl', ['$scope', '$location', '$window', '$UserService', 'AuthenticationService',
+		function LoginCtrl($scope, $location, $window, UserService, AuthenticationService) {
+		//Login, Logout
+			$scope.logIn=function logIn(username, password){
+				if (username !== undefined && password !== undefined) {
+
+					UserService.logIn(username, password).success(function(data) {
+						AuthenticationService.isLogged = true;
+						$window.sessionStorage.token = data.token;
+						$location.path("/admin");
+					}).error(function(status, data) {
+						console.log(status);
+						console.log(data);
+					});
+				}
+			}
+
+			$scope.logout = function logout() {
+				if (AuthenticationService.isLogged) {
+					AuthenticationService.isLogged = false;
+					delete $window.sessionStorage.token;
+					$location.path("/");
+				}
+			}
+		}
+	]);
+
+	app.factory('AuthenticationService', function() {
+		var auth = {
+			isLogged: false
+		}
+
+		return auth;
+	});
+	app.factory('UserService', function($http) {
+		return {
+			logIn: function(username, password) {
+				return $http.post(options.api.base_url + '/login', {username: username, password: password});
+			},
+
+			logOut: function() {
+
+			}
+		}
+	});
+
+	app.factory('TokenInterceptor', function ($q, $window, $location, AuthenticationService) {
+		return {
+			request: function (config) {
+				config.headers = config.headers || {};
+				if ($window.sessionStorage.token) {
+					config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
+				}
+				return config;
+			},
+
+			requestError: function(rejection) {
+				return $q.reject(rejection);
+			},
+
+			/* Set Authentication.isAuthenticated to true if 200 received */
+			response: function (response) {
+				if (response != null && response.status == 200 && $window.sessionStorage.token && !AuthenticationService.isAuthenticated) {
+					AuthenticationService.isAuthenticated = true;
+				}
+				return response || $q.when(response);
+			},
+
+			/* Revoke client authentication if 401 is received */
+			responseError: function(rejection) {
+				if (rejection != null && rejection.status === 401 && ($window.sessionStorage.token || AuthenticationService.isAuthenticated)) {
+					delete $window.sessionStorage.token;
+					AuthenticationService.isAuthenticated = false;
+					$location.path("/admin/login");
+				}
+
+				return $q.reject(rejection);
+			}
+		};
+	});
+
+	app.config(function ($httpProvider) {
+		$httpProvider.interceptors.push('TokenInterceptor');
+	});
+
+	app.run(function($rootScope, $location, AuthenticationService) {
+		$rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+			if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
+				$location.path("/login");
+			}
+		});
+	});
+
+	</script>
+
+</body>
+</html>
