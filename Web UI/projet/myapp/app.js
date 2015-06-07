@@ -49,10 +49,14 @@ app.post('/login', function (req, res) {
   });
 });
 
-//Route protégée grace a expressJwt token
-app.get('/api/data.json', expressJwt({secret: config.secret}), function(req, res) {
+app.get('/data.json', function(req, res) {
   res.sendFile(path.join(__dirname+'/data.json'));
 });
+
+//Route protégée grace a expressJwt token
+/*app.get('/api/', expressJwt({secret: config.secret}), function(req, res) {
+  res.sendFile(path.join(__dirname+'/data.json'));
+});*/
 
 
 

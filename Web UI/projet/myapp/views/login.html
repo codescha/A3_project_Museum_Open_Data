@@ -1,23 +1,41 @@
-<button ng-click="logout()">Déconnexion</button>
-
-<form class="form-horizontal" role="form">
+<form name="login_form" class="form-horizontal col-sm-4 col-sm-offset-4" role="form">
     <div class="form-group">
-        <label for="inputUsername" class="col-sm-4 control-label">Username</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="inputUsername" placeholder="Username" ng-model="login.email" />
+        <label for="inputUsername" class="control-label">Username</label>
+        <div class="">
+            <div class="input-group" ng-class="{ 'has-error': login_form.email.$error.email || (login_form.email.$error.required && login_form.email.$dirty) }">
+                <span class="input-group-addon" id="basic-addon1">@</span>
+                <input required type="email" name="email" class="form-control" id="inputUsername" placeholder="Username" ng-model="login.email" />
+            </div>
+        </div>
+        <div class="error-container" ng-show="login_form.email.$dirty && login_form.email.$invalid">
+            <small class="has-error"
+                   ng-show="login_form.email.$error.required">
+                Your email is required.
+            </small>
+            <small class="has-error"
+                   ng-show="login_form.email.$error.email">
+                That is not a valid email. Please input a valid email.
+            </small>
         </div>
     </div>
     <div class="form-group">
-        <label for="inputPassword" class="col-sm-4 control-label">Password</label>
-        <div class="col-sm-4">
-            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="login.password" />
+        <label for="inputPassword" class="control-label">Password</label>
+        <div>
+            <input required type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="login.password" />
         </div>
     </div>
     <div class="form-group">
-        <div class="col-sm-offset-4 col-sm-10">
+        <div>
             <button type="submit" class="btn btn-default" ng-click="logIn(login.email, login.password)">Log In</button>
         </div>
     </div>
+
+    <div ng-show="wrongCredentials" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Erreur!</strong> Mauvais email ou mot de passe
+    </div>
+    <div ng-show="loginFailed" class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Erreur!</strong> Echec de la connexion
+    </div>
 </form>
-        <p ng-show="wrongCredentials">Mauvais email ou mot de passe</p>
-        <p ng-show="loginFailed">Echec de la connexion</p>
