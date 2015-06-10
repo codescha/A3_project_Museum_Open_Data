@@ -35,7 +35,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 								factory.collections = data;
 								deferred.resolve(factory.collections);
 							}).error(function(data, status){
-								deferred.reject('Erreur de chergement du fichier');
+								deferred.reject('Erreur de chargement du fichier');
 							});
 				}
 				return deferred.promise;
@@ -197,7 +197,6 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 			console.log(next.$$route);
 			console.log(AuthenticationService.isLogged);
 			if (next.$$route.access.requiredLogin && !AuthenticationService.isLogged) {
-				$location.path("/login");
 			}
 		});
 	});
