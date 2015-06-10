@@ -1,0 +1,12 @@
+[
+	{
+		"id": "0",
+		"name": "Muséum d'histoire naturelle du Havre",
+		"description": "Un Muséum pas comme les autres...\nTout au long de l’année, le Muséum d’histoire naturelle du Havre propose des expositions temporaires ludiques et interactives pour découvrir et comprendre les richesses du monde animal, végétal et minéral.\n\nSon objectif : donner l’envie d’être curieux en associant science et sourire, explorer autrement les multiples champs de la culture scientifique pour mieux en faire partager les enjeux et s’inscrire comme un lieu de lien et de partage intergénérationnel.\n\nAvec un riche programme d’expositions, de visites thématiques, d’ateliers, de rencontres autour du conte, de spectacles, de conférences ou encore d’événements, le Muséum s’affirme comme un lieu de découverte et de partage pour toute la famille.",
+		"jsonfilename": "museumhavre.json",
+		"address": "Place du Vieux Marché",
+		"zip": "76600",
+		"city": "Le Havre",
+		"email": "museum@lehavre.fr"
+	}
+]

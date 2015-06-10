@@ -1,0 +1,27 @@
+<div ng-show="loading">Chargement...</div>
+<div ng-hide="loading">
+	<div class="row">
+	        <div class="col-lg-12">
+				<h1>Tous les musées</h1>
+			</div>
+		</div>
+		<div class="row" ng-repeat="museum in museums">
+			<div class="col-md-7 img-portfolio">
+				<a href="#/museum/{{museum.id}}">
+	                <img class="img-responsive img-hover" src="http://placehold.it/700x300" alt="{{museum.name}}">
+	            </a>
+	        </div>
+	        <div class="col-md-5">
+				<h3>
+					<a href="#/museum/{{museum.id}}">{{museum.name}}
+					</a>
+				</h3>
+				<p>
+					{{museum.description}}
+					<br>
+				</p>
+				<a class="btn btn-primary" href="#/collections">Voir les collections</a>
+			</div>
+		</div>
+	</div>
+</div>
