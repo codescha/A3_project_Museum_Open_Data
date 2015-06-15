@@ -99,6 +99,9 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li ng-click="logout()" ng-show="isLoggedUser"><a href="#/">Déconnexion</a></li>
 						<li ng-show="!isLoggedUser"><a href="#/login">Connexion</a></li>
+                        <li ng-show="!isLoggedUser">
+                            <a href="#/subscribe">Inscription</a>
+                        </li>
 					</ul>
                 </ul>
             </div>

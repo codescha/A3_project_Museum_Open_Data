@@ -21,6 +21,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 				.when('/login', {templateUrl: './views/login.html',
 					controller: 'LoginCtrl',
 					access: {requiredLogin: false}})
+				.when('/subscribe', {templateUrl: './views/subscribe.html',
+					controller: 'SubscribeCtrl',
+					access: {requiredLogin: false}})
 				.otherwise({redirectTo : '/'});
 	});
 
@@ -181,7 +184,46 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 			alert(msg);
 		});
 
-	})
+	});
+
+	app.controller('SubscribeCtrl', ['$scope', '$location', '$window', 'UserService',
+		function($scope, $location, $window, UserService) {
+			$scope.subscribe = {
+				firstname: '',
+				lastname: '',
+				email: '',
+				password: ''
+			}
+			$scope.wrongCredentials = false;
+			$scope.loginFailed = false;
+
+			var firstname = $scope.subscribe.firstname;
+			var lastname = $scope.subscribe.lastname;
+			var email = $scope.subscribe.email;
+			var password = $scope.subscribe.password;
+
+			$scope.subscribe=function subscribe(firstname, lastname, email, password){
+				if (email !== undefined && password !== undefined && firstname !== undefined && lastname !== undefined){
+
+					UserService.subscribe(firstname, lastname, email, password).success(function(data) {
+						if(data.code == "ko"){
+							$scope.wrongCredentials = true;
+							$scope.loginFailed = true;
+						} else {
+							AuthenticationService.isLogged = true;
+							$window.sessionStorage.token = data.token;
+							$scope.$parent.isLoggedUser = true;
+							$location.path("/");
+						}
+					}).error(function(status, data) {
+						console.log(status);
+						console.log(data);
+						$scope.loginFailed = true;
+					});
+				}
+			}
+
+	}]);
 
 	app.controller('LoginCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
 		function LoginCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
@@ -217,11 +259,11 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 				}
 			}
 
-			$http.get('api/data.json')
+		/*	$http.get('api/data.json')
 					.success(function(data, status){
 						console.log(data);
 					}).error(function(data, status){
-					});
+					}); */
 		}
 	]);
 
@@ -244,6 +286,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 					delete $window.sessionStorage.token;
 					$location.path("/login");
 				}
+			},
+			subscribe: function(firstname, lastname, email, password){
+				return $http.post('/subscribe', {firstname: firstname, lastname: lastname, email: email, password: password});
 			}
 		}
 	});

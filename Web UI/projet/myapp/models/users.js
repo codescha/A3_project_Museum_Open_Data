@@ -18,4 +18,23 @@ var login = function(mail, password, callback){
     });
 }
 
+var subscribe = function(firstname, lastname, mail, password, callback){
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('INSERT INTO t_user (firstname, lastname, mail, password) VALUES ($1, $2, $3, $4)', [firstname, lastname, mail, password], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rows[0]);
+        });
+    });
+}
+
+exports.subscribe = subscribe;
 exports.login = login;
