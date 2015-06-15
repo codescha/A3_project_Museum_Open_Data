@@ -15,7 +15,9 @@
     "jade": "~1.9.2",
     "jsonwebtoken": "^5.0.1",
     "morgan": "~1.5.3",
+    "password-hash": "^1.2.2",
     "pg": "^4.3.0",
-    "serve-favicon": "~2.2.1"
+    "serve-favicon": "~2.2.1",
+    "sha1": "^1.1.1"
   }
 }

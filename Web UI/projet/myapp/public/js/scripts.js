@@ -36,15 +36,17 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				.otherwise({redirectTo : '/'});
 	});
 
-	app.controller('IndexCtrl', ['$scope', 'UserService', 'AuthenticationService', function($scope, UserService, AuthenticationService) {
+	app.controller('IndexCtrl', ['$scope', 'UserService', 'AuthenticationService', '$window', function($scope, UserService, AuthenticationService, $window) {
 		$scope.isLoggedUser = AuthenticationService.isLogged;
-
-
 
 		$scope.logout = function logout() {
 			UserService.logOut();
 			$scope.isLoggedUser = AuthenticationService.isLogged;
 		};
+
+        if($window.sessionStorage.userInfos != undefined){
+            $scope.userInfos = JSON.parse($window.sessionStorage.userInfos);
+        }
 	}]);
 
 	app.factory('CollectionFactory', function($http, $q){
@@ -211,44 +213,37 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 
 	app.controller('SubscribeCtrl', ['$scope', '$location', '$window', 'UserService',
 		function($scope, $location, $window, UserService) {
-			$scope.subscribe = {
-				firstname: '',
-				lastname: '',
-				email: '',
-				password: ''
-			}
-			$scope.wrongCredentials = false;
-			$scope.loginFailed = false;
-
-			var firstname = $scope.subscribe.firstname;
-			var lastname = $scope.subscribe.lastname;
-			var email = $scope.subscribe.email;
-			var password = $scope.subscribe.password;
-
-            $scope.subscribe=function subscribe(firstname, lastname, email, password){
-				if (email !== undefined && password !== undefined && firstname !== undefined && lastname !== undefined){
-
-					UserService.subscribe(firstname, lastname, email, password).success(function(data) {
-						if(data.code == "ko"){
-							$scope.wrongCredentials = true;
-							$scope.loginFailed = true;
-						} else {
-							AuthenticationService.isLogged = true;
-							$window.sessionStorage.token = data.token;
-							$scope.$parent.isLoggedUser = true;
-							$location.path("/");
-						}
-					}).error(function(status, data) {
-						console.log(status);
-						console.log(data);
-						$scope.loginFailed = true;
-					});
-				}
-                $location.path("/login");
-
+            $scope.subscribe = {
+                firstname: '',
+                lastname: '',
+                email: '',
+                password: ''
             }
+            $scope.wrongCredentials = false;
+            $scope.loginFailed = false;
 
-	}]);
+            var firstname = $scope.subscribe.firstname;
+            var lastname = $scope.subscribe.lastname;
+            var email = $scope.subscribe.email;
+            var password = $scope.subscribe.password;
+
+            $scope.subscribe = function subscribe(firstname, lastname, email, password) {
+                if (email !== undefined && password !== undefined && firstname !== undefined && lastname !== undefined) {
+
+                    UserService.subscribe(firstname, lastname, email, password).success(function (data) {
+                        if(data.code == "ko"){
+                            console.log('erreur inscription');
+                        } else {
+                            $location.path("/login");
+                        }
+                    }).error(function (status, data) {
+                        console.log(status);
+                        console.log(data);
+                    });
+                }
+            }
+        }
+	]);
 
 	app.controller('LoginCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
 		function LoginCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
@@ -272,7 +267,13 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 							$scope.loginFailed = true;
 						} else {
 							AuthenticationService.isLogged = true;
-							$window.sessionStorage.token = data.token;
+                            console.log(data);
+                            console.log(data.user.firstname);
+
+                            $window.sessionStorage.setItem('userInfos', JSON.stringify(data.user));
+                            $scope.$parent.userInfos = data.user;
+
+                            $window.sessionStorage.token = data.token;
                             $scope.$parent.isLoggedUser = true;
 							$location.path("/");
 						}
@@ -292,6 +293,12 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 		}
 	]);
 
+    app.controller('UserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
+        function UserCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
+
+        }
+    ]);
+
 	app.factory('AuthenticationService', function() {
 		var auth = {
 			isLogged: false
@@ -309,12 +316,14 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				if (AuthenticationService.isLogged) {
 					AuthenticationService.isLogged = false;
 					delete $window.sessionStorage.token;
+                    delete $window.sessionStorage.userInfos;
 					$location.path("/login");
 				}
 			},
 			subscribe: function(firstname, lastname, email, password){
 				return $http.post('/subscribe', {firstname: firstname, lastname: lastname, email: email, password: password});
 			}
+
 		}
 	});
 

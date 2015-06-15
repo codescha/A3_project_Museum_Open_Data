@@ -41,7 +41,8 @@ app.post('/login', function (req, res) {
       console.log(data);
       if (data != undefined) {
           var token = jwt.sign(data, config.secret, {expiresInMinutes: 60});
-          return res.json({code: 'ok', token: token});
+          return res.json({code: 'ok', token: token, user:data});
+          //return data;
       } else {
           console.log("Echec du login avec " + mail);
           return res.json({code: 'ko'});
@@ -58,17 +59,13 @@ app.post('/subscribe', function (req, res) {
   if (email == '' || password == '' || firstname == '' || lastname == '') {
     return res.send(401);
   }
-
-  /*  modelUsers.subscribe(firstname, lastname, email, password, function(data){
-    console.log(data);
-    if(data != undefined){
-      var token = jwt.sign(data, config.secret, { expiresInMinutes: 60 });
-      return res.json({code:'ok', token:token});
-    } else {
-      console.log("Echec du login avec " + email);
-      return res.json({code:'ko'});
-    }
-  }); */
+    modelUsers.subscribe(firstname, lastname, email, password, function(data){
+        if(data != undefined){
+          return res.json({code:'ok'});
+        } else {
+          return res.json({code:'ko'});
+        }
+    });
 });
 
 app.get('/json/:file', function(req, res) {
