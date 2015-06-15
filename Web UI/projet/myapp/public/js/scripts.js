@@ -189,7 +189,6 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 	}]);
 
 	app.controller('MuseumCtrl', function($scope, MuseumFactory, $routeParams) {
-<<<<<<< HEAD
 	$scope.loading = true;
 	var museum =  MuseumFactory.getMuseum($routeParams.idm).then(function(museum){
 		$scope.loading = false;
@@ -197,7 +196,6 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 	}, function(msg){
 		alert(msg);
 	});
-=======
 		$scope.loading = true;
 		var museum =  MuseumFactory.getMuseum($routeParams.idm).then(function(museum){
 			$scope.loading = false;
@@ -206,10 +204,8 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			alert(msg);
 		});
 
-	})
->>>>>>> origin/master
+	});
 
-});
 
 
 
