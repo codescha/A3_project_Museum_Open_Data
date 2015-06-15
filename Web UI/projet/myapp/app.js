@@ -37,15 +37,15 @@ app.post('/login', function (req, res) {
     return res.send(401);
   }
 
-  modelUsers.login(mail, password, function(data){
-    console.log(data);
-    if(data != undefined){
-      var token = jwt.sign(data, config.secret, { expiresInMinutes: 60 });
-      return res.json({code:'ok', token:token});
-    } else {
-      console.log("Echec du login avec " + mail);
-      return res.json({code:'ko'});
-    }
+  modelUsers.login(mail, password, function(data) {
+      console.log(data);
+      if (data != undefined) {
+          var token = jwt.sign(data, config.secret, {expiresInMinutes: 60});
+          return res.json({code: 'ok', token: token});
+      } else {
+          console.log("Echec du login avec " + mail);
+          return res.json({code: 'ko'});
+      }
   });
 });
 
@@ -93,6 +93,7 @@ app.get('/public/:dossier/:page', function(req, res){
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname+'/index.html')); // load the single view file (angular will handle the page changes on the front-end)
 });
+
 
 
 // catch 404 and forward to error handler
