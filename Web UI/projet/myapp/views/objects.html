@@ -30,8 +30,8 @@
             </div>
         </div>
 
-		<div ng-repeat="object in objects | filter:{name:query} | orderBy:order">
-                <div class="col-md-4 text-center">
+		<div dir-paginate="object in objects | filter:{name:query} | orderBy:order | itemsPerPage:12" current-page="currentPage">
+            <div class="col-md-4 text-center">
                 <div class="thumbnail">
                     <a href="#/object/{{idc}}/{{object.id}}">
                         <img class="img-responsive" src="http://placehold.it/750x450" alt="">
@@ -54,8 +54,13 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-			
+            </div>			
 		</div>		
     </div>
+	<div class="other-controller">
+	  <small>this is in "OtherController"</small>
+	  <div class="text-center">
+	  <dir-pagination-controls boundary-links="true" template-url="dirPagination.tpl.html"></dir-pagination-controls>
+	  </div>
+	</div>
 </div>
