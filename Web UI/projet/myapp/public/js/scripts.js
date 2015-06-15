@@ -2,28 +2,37 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 	app.config(function($routeProvider) {
 		$routeProvider
 				.when('/', {templateUrl: 'views/home.html',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/museums', {templateUrl: 'views/museums.html',
 					controller: 'MuseumsCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/museum/:idm', {templateUrl: 'views/museum.html',
 					controller: 'MuseumCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/collections', {templateUrl: 'views/collections.html',
 					controller: 'CollectionsCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/objects/:id', {templateUrl: 'views/objects.html',
 					controller: 'ObjectsCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/object/:idc/:ido', {templateUrl: 'views/object.html',
 					controller: 'ObjectCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/login', {templateUrl: './views/login.html',
 					controller: 'LoginCtrl',
 					access: {requiredLogin: false}})
 				.when('/subscribe', {templateUrl: './views/subscribe.html',
 					controller: 'SubscribeCtrl',
 					access: {requiredLogin: false}})
+                .when('/user', {templateUrl: './views/user.html',
+                    controller: '',
+                    access: {requiredLogin: true}})
+                .when('/user_exhibitions', {templateUrl: './views/user_exhibitions.html',
+                    controller: '',
+                    access: {requiredLogin: true}})
+                .when('/favorites', {templateUrl: './views/favorites.html',
+                    controller: '',
+                    access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
 	});
 
@@ -202,7 +211,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 			var email = $scope.subscribe.email;
 			var password = $scope.subscribe.password;
 
-			$scope.subscribe=function subscribe(firstname, lastname, email, password){
+            $scope.subscribe=function subscribe(firstname, lastname, email, password){
 				if (email !== undefined && password !== undefined && firstname !== undefined && lastname !== undefined){
 
 					UserService.subscribe(firstname, lastname, email, password).success(function(data) {
@@ -221,7 +230,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 						$scope.loginFailed = true;
 					});
 				}
-			}
+                $location.path("/login");
+
+            }
 
 	}]);
 
@@ -343,6 +354,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 			console.log(next.$$route);
 			console.log(AuthenticationService.isLogged);
 			if (next.$$route.access.requiredLogin && !AuthenticationService.isLogged) {
+                $location.path("/login");
 			}
 		});
 	});

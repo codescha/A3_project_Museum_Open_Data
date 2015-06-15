@@ -59,7 +59,7 @@ app.post('/subscribe', function (req, res) {
     return res.send(401);
   }
 
-  modelUsers.subscribe(firstname, lastname, email, password, function(data){
+  /*  modelUsers.subscribe(firstname, lastname, email, password, function(data){
     console.log(data);
     if(data != undefined){
       var token = jwt.sign(data, config.secret, { expiresInMinutes: 60 });
@@ -68,7 +68,7 @@ app.post('/subscribe', function (req, res) {
       console.log("Echec du login avec " + email);
       return res.json({code:'ko'});
     }
-  });
+  }); */
 });
 
 app.get('/json/:file', function(req, res) {
