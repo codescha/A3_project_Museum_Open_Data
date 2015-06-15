@@ -1,4 +1,4 @@
-var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
+var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.directives.dirPagination']);
 	app.config(function($routeProvider) {
 		$routeProvider
 				.when('/', {templateUrl: 'views/home.html',
@@ -148,6 +148,8 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 	}]);
 
 	app.controller('ObjectsCtrl', function($scope, CollectionFactory, $routeParams) {
+		$scope.currentPage = 1;
+  		$scope.pageSize = 12;
 		$scope.loading = true;
 		var collection =  CollectionFactory.getCollection($routeParams.id).then(function(collection){
 			$scope.loading = false;
@@ -193,7 +195,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 			alert(msg);
 		});
 
-	});
+	})
 
 	app.controller('SubscribeCtrl', ['$scope', '$location', '$window', 'UserService',
 		function($scope, $location, $window, UserService) {
