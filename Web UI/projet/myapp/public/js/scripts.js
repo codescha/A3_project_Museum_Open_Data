@@ -25,7 +25,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 					controller: 'SubscribeCtrl',
 					access: {requiredLogin: false}})
                 .when('/user', {templateUrl: './views/user.html',
-                    controller: '',
+                    controller: 'UserCtrl',
                     access: {requiredLogin: true}})
                 .when('/user_exhibitions', {templateUrl: './views/user_exhibitions.html',
                     controller: '',
@@ -38,6 +38,8 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 
 	app.controller('IndexCtrl', ['$scope', 'UserService', 'AuthenticationService', function($scope, UserService, AuthenticationService) {
 		$scope.isLoggedUser = AuthenticationService.isLogged;
+
+
 
 		$scope.logout = function logout() {
 			UserService.logOut();
@@ -185,15 +187,17 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 	}]);
 
 	app.controller('MuseumCtrl', function($scope, MuseumFactory, $routeParams) {
-		$scope.loading = true;
-		var museum =  MuseumFactory.getMuseum($routeParams.idm).then(function(museum){
-			$scope.loading = false;
-			$scope.museum = museum;
-		}, function(msg){
-			alert(msg);
-		});
-
+	$scope.loading = true;
+	var museum =  MuseumFactory.getMuseum($routeParams.idm).then(function(museum){
+		$scope.loading = false;
+		$scope.museum = museum;
+	}, function(msg){
+		alert(msg);
 	});
+
+});
+
+
 
 	app.controller('SubscribeCtrl', ['$scope', '$location', '$window', 'UserService',
 		function($scope, $location, $window, UserService) {
@@ -259,7 +263,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap']);
 						} else {
 							AuthenticationService.isLogged = true;
 							$window.sessionStorage.token = data.token;
-							$scope.$parent.isLoggedUser = true;
+                            $scope.$parent.isLoggedUser = true;
 							$location.path("/");
 						}
 					}).error(function(status, data) {
