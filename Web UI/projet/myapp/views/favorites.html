@@ -3,16 +3,7 @@
 
    	<div class="row">
         <div class="col-lg-12">
-            <h1>Mes favoris</h1> {{favNumbers}}
-            <div>
-                <button type="submit" class="btn btn-default" ng-click="getFavorites($parent.userInfos.id_user)">Voir mes favoris</button>
-            </div>
-
-            {{favorites}}
-            {{favorites.title}}
-            {{favorites.description}}
-            {{favoritesTitle}}
-
+            <h1>Mes favoris ({{favorites.length}})</h1>
 
             <div  ng-repeat="fav in favorites track by fav.id_item">
                 <div class="col-md-5">

@@ -180,7 +180,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                         UserService.favorite(userId, itemId).success(function (data) {
                             if(data.code =="exists"){
                                 $scope.favoriteExists = true;
-                                $window.alert($scope.favoriteExists);
+                                alert("Favoris deja enregistré !");
                             }
                             else if (data.code == "ko") {
                                 console.log('erreur ajout aux favoris');
@@ -257,7 +257,10 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                 if (email !== undefined && password !== undefined && firstname !== undefined && lastname !== undefined) {
 
                     UserService.subscribe(firstname, lastname, email, password).success(function (data) {
-                        if(data.code == "ko"){
+                        if(data.code =="exists"){
+                            alert("Email déjà inscrit !");
+                        }
+                        else if(data.code == "ko"){
                             console.log('erreur inscription');
                         } else {
                             $location.path("/login");
@@ -288,7 +291,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				if (username !== undefined && password !== undefined) {
 
 					UserService.logIn(username, password).success(function(data) {
-						if(data.code == "ko"){
+                        if(data.code == "ko"){
 							$scope.wrongCredentials = true;
 							$scope.loginFailed = true;
 						} else {
@@ -327,30 +330,24 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 
     app.controller('FavoriteCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
         function FavoriteCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
-            $scope.favorite = {
-                userId: '',
-            }
-            var userId = $scope.favorite.userId;
 
-            $scope.getFavorites = function getFavorites(userId) {
+            $scope.getFavorites = function (userId) {
                 if (userId !== undefined) {
 
                     UserService.getFavorites(userId).success(function (data) {
                         if(data.code == "ko"){
                             console.log('erreur récupération favoris');
                         } else {
-                            $scope.favorites = JSON.stringify(data.favorites.rows);
-                            $scope.favoritesTitle = JSON.stringify(data.favorites.rows.title);
-                            $scope.favNumbers = JSON.stringify(data.favorites.rowCount);
-                            console.log($scope.favorites);
-                            console.log($scope.favoritesTitle);
+                            $scope.favorites = data.favorites;
                         }
                     }).error(function (status, data) {
                         console.log(status);
                         console.log(data);
                     });
                 }
-            }
+            };
+
+            $scope.getFavorites($scope.$parent.userInfos.id_user);
         }
     ]);
 

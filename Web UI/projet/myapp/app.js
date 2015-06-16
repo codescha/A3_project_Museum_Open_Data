@@ -37,17 +37,18 @@ app.post('/login', function (req, res) {
     return res.send(401);
   }
 
-  modelUsers.login(mail, password, function(data) {
-      console.log(data);
-      if (data != undefined) {
-          var token = jwt.sign(data, config.secret, {expiresInMinutes: 60});
-          return res.json({code: 'ok', token: token, user:data});
-          //return data;
-      } else {
-          console.log("Echec du login avec " + mail);
-          return res.json({code: 'ko'});
-      }
-  });
+            modelUsers.login(mail, password, function (data) {
+                console.log(data);
+                if (data != undefined) {
+                    var token = jwt.sign(data, config.secret, {expiresInMinutes: 60});
+                    return res.json({code: 'ok', token: token, user: data});
+                    //return data;
+                } else {
+                    console.log("Echec du login avec " + mail);
+                    return res.json({code: 'ko'});
+                }
+            });
+
 });
 
 app.post('/subscribe', function (req, res) {
@@ -59,11 +60,19 @@ app.post('/subscribe', function (req, res) {
   if (email == '' || password == '' || firstname == '' || lastname == '') {
     return res.send(401);
   }
-    modelUsers.subscribe(firstname, lastname, email, password, function(data){
-        if(data != undefined){
-          return res.json({code:'ok'});
+
+    modelUsers.checkMail(email, function(data) {
+        if (data != undefined) {
+            console.log("L'email " + email + "existe déjà");
+            return res.json({code: 'exists'});
         } else {
-          return res.json({code:'ko'});
+            modelUsers.subscribe(firstname, lastname, email, password, function (data) {
+                if (data != undefined) {
+                    return res.json({code: 'ok'});
+                } else {
+                    return res.json({code: 'ko'});
+                }
+            });
         }
     });
 });
@@ -102,10 +111,9 @@ app.post('/favorites', function (req, res) {
     }
 
     modelUsers.getFavorites(userId, function(data) {
-        console.log(data);
-        if (data != undefined) {
-            return res.json({code: 'ok', favorites:data});
-            console.log(data);
+        if (data != null) {
+            return res.json({code: 'ok', favorites:data.rows});
+            console.log(data.rows);
         } else {
             console.log("Echec de la récupération du mot de passe pour l'utilisateur: " + userId);
             return res.json({code: 'ko'});

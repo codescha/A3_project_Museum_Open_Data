@@ -51,12 +51,9 @@
                             </li>
                             <li><a href=""><i class="fa fa-2x fa-share"></i></a>
                             </li>
-                            <li><a  href="" ng-click="addFavorite(favorite.userId, favorite.itemId)"><i class="fa fa-2x fa-star"></i></a>
-                            <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
-                                <div id="divalert{{object.id}}" ng-show="favoriteExists" class="alert alert-danger alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    Oeuvre déjà ajouté
-                                </div>
+                            <li>
+                                <a  href="" ng-click="addFavorite(favorite.userId, favorite.itemId)"><i class="fa fa-2x fa-star"></i></a>
+                                <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
                             </li>
                         </ul>
                     </div>

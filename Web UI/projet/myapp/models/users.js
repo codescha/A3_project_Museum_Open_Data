@@ -21,6 +21,24 @@ var login = function(mail, password, callback){
     });
 }
 
+var checkMail = function(mail, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('SELECT * FROM t_user WHERE mail=$1', [mail], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rows[0]);
+        });
+    });
+}
+
 var subscribe = function(firstname, lastname, mail, password, callback){
     var hashedPassword = sha1(password);
 
@@ -122,3 +140,4 @@ exports.login = login;
 exports.favorite = favorite;
 exports.getFavorite = getFavorite;
 exports.getFavorites = getFavorites;
+exports.checkMail = checkMail;
