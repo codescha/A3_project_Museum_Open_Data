@@ -78,6 +78,47 @@ var favorite = function(userId, itemId, callback){
     });
 }
 
+//Vérifie la présence de l'objet dans la table des favoris
+var getFavorite = function(userId, itemId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('SELECT * FROM t_favorite WHERE item_id_item=$1 AND user_id_user=$2', [itemId, userId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rows[0]);
+        });
+    });
+}
+
+var getFavorites = function(userId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('SELECT * FROM t_item INNER JOIN t_favorite ON t_favorite.item_id_item = t_item.id_item WHERE t_favorite.user_id_user = $1', [userId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rowCount);
+        });
+    });
+}
+
 exports.subscribe = subscribe;
 exports.login = login;
 exports.favorite = favorite;
+exports.getFavorite = getFavorite;
+exports.getFavorites = getFavorites;

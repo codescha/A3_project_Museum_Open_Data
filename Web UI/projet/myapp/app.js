@@ -75,12 +75,21 @@ app.post('/objects', function (req, res) {
     if (userId == '' || itemId == '' ) {
         return res.send(401);
     }
-    modelUsers.favorite(userId, itemId, function(data){
+
+    modelUsers.getFavorite(userId, itemId, function(data){
         console.log(data);
-        if(data != undefined){
-            return res.json({code:'ok'});
+        if (data != undefined) {
+            console.log("L'objet " + itemId +  " est déjà ajouté aux favoris");
+            return res.json({code:'exists'});
         } else {
-            return res.json({code:'ko'});
+            modelUsers.favorite(userId, itemId, function(data){
+                console.log(data);
+                if(data != undefined){
+                    return res.json({code:'ok'});
+                } else {
+                    return res.json({code:'ko'});
+                }
+            })
         }
     });
 });

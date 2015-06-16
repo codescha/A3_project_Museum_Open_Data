@@ -169,26 +169,31 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                 userId: '',
                 itemId: ''
             }
-            var userId = $scope.$parent.userInfos.id;
-            var itemId = '1';
+
+            $scope.favoriteExists = false;
+
+            var userId = $scope.favorite.userId;
+            var itemId = $scope.favorite.itemId;
 
             $scope.favorite = function favorite(userId, itemId) {
                 if (userId !== undefined && itemId !== undefined) {
-
-                    UserService.favorite(userId, itemId).success(function (data) {
-                        if (data.code == "ko") {
-                            console.log('erreur ajout aux favoris');
-                        } else {
-                            $location.path("/favorite");
-                        }
-                    }).error(function (status, data) {
-                        console.log(status);
-                        console.log(data);
-                    });
+                        UserService.favorite(userId, itemId).success(function (data) {
+                            if(data.code =="exists"){
+                                $scope.favoriteExists = true;
+                            }
+                            else if (data.code == "ko") {
+                                console.log('erreur ajout aux favoris');
+                            } else {
+                                $location.path("/");
+                            }
+                        }).error(function (status, data) {
+                            console.log(status);
+                            console.log(data);
+                        });
                 }
             }
 
-        }])
+        }]);
 
 	app.controller('ObjectCtrl', function($scope, CollectionFactory, $routeParams) {
 		$scope.loading = true;
@@ -201,7 +206,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			alert(msg);
 		});
 
-	})
+	});
 
 	app.controller('MuseumsCtrl', ['$scope', 'MuseumFactory',
 		function($scope, MuseumFactory) {
@@ -231,9 +236,6 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 		});
 
 	});
-
-
-
 
 	app.controller('SubscribeCtrl', ['$scope', '$location', '$window', 'UserService',
 		function($scope, $location, $window, UserService) {
@@ -327,16 +329,14 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
         function FavoriteCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
             $scope.favorite = {
                 userId: '',
-                itemId: ''
             }
-            var userId = $scope.$parent.userInfos.id;
-            var itemId = '1';
-            $scope.favorite = function favorite(userId, itemId) {
-                if (userId !== undefined && itemId !== undefined) {
 
-                    UserService.favorite(userId, itemId).success(function (data) {
+            $scope.favorite = function getFavorites(userId) {
+                if (userId !== undefined) {
+
+                    UserService.getFavorites(userId).success(function (data) {
                         if(data.code == "ko"){
-                            console.log('erreur inscription');
+                            console.log('erreur récupération favoris');
                         } else {
                             $location.path("/favorite");
                         }
@@ -376,7 +376,6 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
             favorite: function(userId, itemId){
                 return $http.post('/objects', {userId: userId, itemId: itemId});
             }
-
 		}
 	});
 
