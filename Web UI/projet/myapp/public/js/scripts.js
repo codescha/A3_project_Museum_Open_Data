@@ -28,10 +28,16 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                     controller: 'UserCtrl',
                     access: {requiredLogin: true}})
                 .when('/user_exhibitions', {templateUrl: './views/user_exhibitions.html',
-                    controller: '',
+                    controller: 'exhibitionListCtrl',
                     access: {requiredLogin: true}})
                 .when('/favorites', {templateUrl: './views/favorites.html',
                     controller: 'FavoriteCtrl',
+                    access: {requiredLogin: true}})
+                .when('/createExhibition', {templateUrl: './views/create_exhibition.html',
+                    controller: 'createExhibitionCtrl',
+                    access: {requiredLogin: true}})
+                .when('/exhibitionList', {templateUrl: './views/exhibitionList.html',
+                    controller: 'exhibitionListCtrl',
                     access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
 	});
@@ -322,6 +328,27 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 		}
 	]);
 
+app.controller('createExhibitionCtrl', ['$scope', '$location', '$window', 'UserService',
+    function($scope, $location, $window, UserService) {
+
+        $scope.createExhibition = function createExhibition(title, description, userId) {
+            if (title !== undefined && description !== undefined && userId !== undefined) {
+
+                UserService.createExhibition(title, description, userId).success(function (data) {
+                   if(data.code == "ko"){
+                        console.log('erreur creation expo');
+                    } else {
+                        $location.path("/museums");
+                    }
+                }).error(function (status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+        }
+    }
+]);
+
     app.controller('UserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
         function UserCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
 
@@ -350,6 +377,29 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
             $scope.getFavorites($scope.$parent.userInfos.id_user);
         }
     ]);
+
+app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window',
+    function($scope, $routeParams, UserService, $http, $window) {
+
+        $scope.exhibitionList = function exhibitionList(userId) {
+            if (userId !== undefined) {
+                UserService.exhibitionList(userId).success(function (data) {
+                   if (data.code == "ko") {
+                        console.log('erreur');
+                    } else {
+                       console.log(data);
+                       $scope.exhibition = data.exhibition;
+                    }
+                }).error(function (status, data) {
+                    console.log(status);
+                    console.log(data);
+                });
+            }
+        }
+
+        $scope.exhibitionList($scope.$parent.userInfos.id_user);
+
+    }]);
 
 	app.factory('AuthenticationService', function() {
 		var auth = {
@@ -380,6 +430,12 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
             },
             getFavorites: function(userId){
                 return $http.post('/favorites', {userId: userId});
+            },
+            createExhibition: function(title, description, userId){
+                return $http.post('/createExhibition', {title: title, description: description, userId: userId});
+            },
+            exhibitionList: function(userId){
+                return $http.post('/exhibitionList', {userId: userId});
             }
 		}
 	});

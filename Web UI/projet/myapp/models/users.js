@@ -135,9 +135,49 @@ var getFavorites = function(userId, callback){
     });
 }
 
+var createExhibition = function(title, description, userId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('INSERT INTO t_exhibitions (title, description, user_id_user) VALUES ($1, $2, $3)', [title, description, userId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result);
+        });
+    });
+}
+
+var exhibitionList = function(userId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('SELECT * FROM t_exhibitions WHERE user_id_user = $1', [userId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result);
+        });
+    });
+}
+
 exports.subscribe = subscribe;
 exports.login = login;
 exports.favorite = favorite;
 exports.getFavorite = getFavorite;
 exports.getFavorites = getFavorites;
 exports.checkMail = checkMail;
+exports.createExhibition = createExhibition;
+exports.exhibitionList = exhibitionList;

@@ -1,0 +1,27 @@
+<h1>Créer mon exposition virtuelle</h1>
+
+
+<form name="exhibition_form" class="form-horizontal col-sm-4 col-sm-offset-4" role="form">
+
+    <div class="form-group">
+        <label for="inputTitle" class="control-label">Titre</label>
+        <div>
+            <input required type="text" class="form-control" id="inputTitle" placeholder="Titre" ng-model="createExhibition.title" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputDescription" class="control-label">Description</label>
+        <div>
+            <textarea required class="form-control" id="inputDescription" placeholder="Description" ng-model="createExhibition.description"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <button type="submit" class="btn btn-default" ng-click="createExhibition(createExhibition.title, createExhibition.description, $parent.userInfos.id_user)">Valider</button>
+        </div>
+    </div>
+
+</form>

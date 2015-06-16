@@ -18,9 +18,20 @@
     <div class="form-group">
         <label for="inputUsername" class="control-label">Email</label>
         <div class="">
-            <div>
+            <div class="input-group" ng-class="{ 'has-error': subscribe_form.email.$error.email || (subscribe_form.email.$error.required && subscribe_form.email.$dirty) }">
+                <span class="input-group-addon" id="basic-addon1">@</span>
                 <input required type="email" name="email" class="form-control" id="inputUsername" placeholder="Email" ng-model="subscribe.email" />
             </div>
+        </div>
+        <div class="error-container" ng-show="subscribe_form.email.$dirty && subscribe_form.email.$invalid">
+            <small class="has-error"
+                   ng-show="subscribe_form.email.$error.required">
+                Merci de renseigner une adresse email.
+            </small>
+            <small class="has-error"
+                   ng-show="subscribe_form.email.$error.email">
+                L'adresse email n'est pas valide. Merci de renseigner une adresse valide.
+            </small>
         </div>
 
     </div>

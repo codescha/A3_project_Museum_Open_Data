@@ -6,15 +6,24 @@
             <h1>Mes favoris ({{favorites.length}})</h1>
 
             <div  ng-repeat="fav in favorites track by fav.id_item">
-                <div class="col-md-5">
-                    <p>
-                        {{fav.title}}
-                        <br>
-                        {{fav.description}}
-                        </p>
+                <div class="col-md-4 text-center">
+                    <div class="thumbnail">
+                        <a href="#/object/{{idc}}/{{fav.id_item}}">
+                            <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                        </a>
+                        <div class="caption">
+                            <a href="#/object/{{idc}}/{{fav.id_item}}">
+                                <h3>{{fav.title}}</h3>
+                            </a>
+                            <ul class="list-inline">
+                                <li>
+                                    <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Supprimer favoris</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

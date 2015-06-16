@@ -115,10 +115,51 @@ app.post('/favorites', function (req, res) {
             return res.json({code: 'ok', favorites:data.rows});
             console.log(data.rows);
         } else {
-            console.log("Echec de la récupération du mot de passe pour l'utilisateur: " + userId);
+            console.log("Echec");
             return res.json({code: 'ko'});
         }
     });
+});
+
+app.post('/createExhibition', function (req, res) {
+    var title = req.body.title || '';
+    var description = req.body.description || '';
+    var userId = req.body.userId || '';
+
+    if (title == '' || description == '' || userId =='') {
+        return res.send(401);
+    }
+
+    modelUsers.createExhibition(title, description, userId, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok'});
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+
+});
+
+app.post('/exhibitionList', function (req, res) {
+    var userId = req.body.userId || '';
+
+    if (userId =='') {
+        return res.send(401);
+    }
+
+    modelUsers.exhibitionList(userId, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok', exhibition:data.rows});
+            console.log(data.rows);
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+
 });
 
 app.get('/json/:file', function(req, res) {
