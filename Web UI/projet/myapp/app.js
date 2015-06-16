@@ -68,6 +68,23 @@ app.post('/subscribe', function (req, res) {
     });
 });
 
+app.post('/objects', function (req, res) {
+    var userId = req.body.userId;
+    var itemId = req.body.itemId;
+
+    if (userId == '' || itemId == '' ) {
+        return res.send(401);
+    }
+    modelUsers.favorite(userId, itemId, function(data){
+        console.log(data);
+        if(data != undefined){
+            return res.json({code:'ok'});
+        } else {
+            return res.json({code:'ko'});
+        }
+    });
+});
+
 app.get('/json/:file', function(req, res) {
   res.sendFile(path.join(__dirname+'/json/'+req.params.file));
 });
@@ -81,6 +98,10 @@ app.get('/json/:file', function(req, res) {
 
 app.get('/views/:page', function(req, res){
   res.sendFile(path.join(__dirname+'/views/'+req.params.page));
+});
+
+app.get('/public/fonts/fontawesome-webfont.ttf?v=4.2.0', function(req, res){
+    res.sendFile(path.join(__dirname+'/public/fonts/fontawesome-webfont.ttf?v=4.2.0'));
 });
 
 app.get('/public/:dossier/:page', function(req, res){

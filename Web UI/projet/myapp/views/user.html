@@ -3,10 +3,12 @@
 
    	<div class="row">
         <div class="col-lg-12">
-            <h1>Mes informations personelles</h1>
-            {{$parent.userInfos.firstname}}
-            {{$parent.userInfos.lastname}}
-            {{$parent.userInfos.mail}}
+            <h1>Mes informations personnelles</h1>
+            <div class="col-md-5">
+                <li>Prénom: {{$parent.userInfos.firstname}}</li>
+                <li>Nom: {{$parent.userInfos.lastname}}</li>
+                <li>Email: {{$parent.userInfos.mail}}</li>
+            </div>
         </div>
     </div>
 </div>

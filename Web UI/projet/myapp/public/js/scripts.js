@@ -31,7 +31,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                     controller: '',
                     access: {requiredLogin: true}})
                 .when('/favorites', {templateUrl: './views/favorites.html',
-                    controller: '',
+                    controller: 'FavoriteCtrl',
                     access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
 	});
@@ -151,20 +151,44 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			});
 	}]);
 
-	app.controller('ObjectsCtrl', function($scope, CollectionFactory, $routeParams) {
-		$scope.currentPage = 1;
-  		$scope.pageSize = 12;
-		$scope.loading = true;
-		var collection =  CollectionFactory.getCollection($routeParams.id).then(function(collection){
-			$scope.loading = false;
-			$scope.idc = collection.id;
-			$scope.title = collection.name;
-			$scope.objects = collection.objects;
-		}, function(msg){
-			alert(msg);
-		});
+	app.controller('ObjectsCtrl', ['$scope', 'CollectionFactory', '$routeParams', 'UserService',
+        function($scope, CollectionFactory, $routeParams, UserService) {
+            $scope.currentPage = 1;
+            $scope.pageSize = 12;
+            $scope.loading = true;
+            var collection = CollectionFactory.getCollection($routeParams.id).then(function (collection) {
+                $scope.loading = false;
+                $scope.idc = collection.id;
+                $scope.title = collection.name;
+                $scope.objects = collection.objects;
+            }, function (msg) {
+                alert(msg);
+            });
 
-	})
+            $scope.favorite = {
+                userId: '',
+                itemId: ''
+            }
+            var userId = $scope.$parent.userInfos.id;
+            var itemId = '1';
+
+            $scope.favorite = function favorite(userId, itemId) {
+                if (userId !== undefined && itemId !== undefined) {
+
+                    UserService.favorite(userId, itemId).success(function (data) {
+                        if (data.code == "ko") {
+                            console.log('erreur ajout aux favoris');
+                        } else {
+                            $location.path("/favorite");
+                        }
+                    }).error(function (status, data) {
+                        console.log(status);
+                        console.log(data);
+                    });
+                }
+            }
+
+        }])
 
 	app.controller('ObjectCtrl', function($scope, CollectionFactory, $routeParams) {
 		$scope.loading = true;
@@ -299,6 +323,32 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
         }
     ]);
 
+    app.controller('FavoriteCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
+        function FavoriteCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
+            $scope.favorite = {
+                userId: '',
+                itemId: ''
+            }
+            var userId = $scope.$parent.userInfos.id;
+            var itemId = '1';
+            $scope.favorite = function favorite(userId, itemId) {
+                if (userId !== undefined && itemId !== undefined) {
+
+                    UserService.favorite(userId, itemId).success(function (data) {
+                        if(data.code == "ko"){
+                            console.log('erreur inscription');
+                        } else {
+                            $location.path("/favorite");
+                        }
+                    }).error(function (status, data) {
+                        console.log(status);
+                        console.log(data);
+                    });
+                }
+            }
+        }
+    ]);
+
 	app.factory('AuthenticationService', function() {
 		var auth = {
 			isLogged: false
@@ -322,7 +372,10 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			},
 			subscribe: function(firstname, lastname, email, password){
 				return $http.post('/subscribe', {firstname: firstname, lastname: lastname, email: email, password: password});
-			}
+			},
+            favorite: function(userId, itemId){
+                return $http.post('/objects', {userId: userId, itemId: itemId});
+            }
 
 		}
 	});

@@ -59,5 +59,25 @@ var getUser = function(id){
     });
 }
 
+var favorite = function(userId, itemId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('INSERT INTO t_favorite (item_id_item, user_id_user) VALUES ($1, $2)', [itemId, userId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rowCount);
+        });
+    });
+}
+
 exports.subscribe = subscribe;
 exports.login = login;
+exports.favorite = favorite;
