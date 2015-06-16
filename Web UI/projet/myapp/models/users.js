@@ -104,7 +104,7 @@ var getFavorites = function(userId, callback){
         if(err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query('SELECT * FROM t_item INNER JOIN t_favorite ON t_favorite.item_id_item = t_item.id_item WHERE t_favorite.user_id_user = $1', [userId], function(err, result) {
+        client.query('SELECT t_item.id_item, t_item.title, t_item.description FROM t_item INNER JOIN t_favorite ON t_favorite.item_id_item = t_item.id_item WHERE t_favorite.user_id_user = $1', [userId], function(err, result) {
             //call `done()` to release the client back to the pool
             done();
             console.log(err);

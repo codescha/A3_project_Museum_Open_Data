@@ -340,7 +340,10 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                             console.log('erreur récupération favoris');
                         } else {
                             $scope.favorites = JSON.stringify(data.favorites.rows);
+                            $scope.favoritesTitle = JSON.stringify(data.favorites.rows.title);
+                            $scope.favNumbers = JSON.stringify(data.favorites.rowCount);
                             console.log($scope.favorites);
+                            console.log($scope.favoritesTitle);
                         }
                     }).error(function (status, data) {
                         console.log(status);
