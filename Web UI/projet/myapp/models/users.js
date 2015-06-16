@@ -173,6 +173,25 @@ var exhibitionList = function(userId, callback){
     });
 }
 
+var fillExhibition = function(exhibitionId, itemId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('INSERT INTO t_item_exhibition (item_id_item, exhibition_id_exhibition) VALUES ($1, $2)', [itemId, exhibitionId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result);
+        });
+    });
+}
+
 exports.subscribe = subscribe;
 exports.login = login;
 exports.favorite = favorite;
@@ -181,3 +200,4 @@ exports.getFavorites = getFavorites;
 exports.checkMail = checkMail;
 exports.createExhibition = createExhibition;
 exports.exhibitionList = exhibitionList;
+exports.fillExhibition = fillExhibition;

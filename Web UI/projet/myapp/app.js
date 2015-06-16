@@ -162,6 +162,26 @@ app.post('/exhibitionList', function (req, res) {
 
 });
 
+app.post('/fillExhibition', function (req, res) {
+    var exhibitionId = req.body.exhibitionId || '';
+    var itemId = req.body.itemId || '';
+
+    if (exhibitionId =='' || itemId == '') {
+        return res.send(401);
+    }
+
+    modelUsers.fillExhibition(exhibitionId, itemId, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok'});
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+
+});
+
 app.get('/json/:file', function(req, res) {
   res.sendFile(path.join(__dirname+'/json/'+req.params.file));
 });

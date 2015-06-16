@@ -36,7 +36,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                 .when('/createExhibition', {templateUrl: './views/create_exhibition.html',
                     controller: 'createExhibitionCtrl',
                     access: {requiredLogin: true}})
-                .when('/exhibitionList', {templateUrl: './views/exhibitionList.html',
+                .when('/exhibitionList/:item_id', {templateUrl: './views/exhibitionList.html',
                     controller: 'exhibitionListCtrl',
                     access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
@@ -398,6 +398,25 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
         }
 
         $scope.exhibitionList($scope.$parent.userInfos.id_user);
+        $scope.objectToAdd_id = $routeParams.item_id;
+        console.log($scope.objectToAdd_id);
+
+        $scope.fillExhibition = function fillExhibition(exhibitionId, itemId) {
+            if (exhibitionId !== undefined && itemId !== undefined) {
+                UserService.fillExhibition(exhibitionId, itemId).success(function (data) {
+                    if (data.code == "ko") {
+                        console.log('erreur');
+                        alert('Oeuvre déjà ajoutée à l\'exposition');
+                    } else {
+                        console.log(data);
+                        alert('Oeuvre ajoutée à l\'exposition');                    }
+                }).error(function (status, data) {
+                    console.log(status);
+                    console.log(data);
+                    alert('Erreur de sauvegarde');
+                });
+            }
+        }
 
     }]);
 
@@ -436,6 +455,9 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
             },
             exhibitionList: function(userId){
                 return $http.post('/exhibitionList', {userId: userId});
+            },
+            fillExhibition: function(exhibitionId, itemId){
+                return $http.post('/fillExhibition', {exhibitionId: exhibitionId, itemId: itemId});
             }
 		}
 	});

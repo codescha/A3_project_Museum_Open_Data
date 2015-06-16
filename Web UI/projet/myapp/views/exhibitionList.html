@@ -7,7 +7,7 @@
 
             <div  ng-repeat="exhibit in exhibition track by exhibit.id_exhibition">
                 <div>
-                    <a class="btn btn-primary">{{exhibit.title}}</a></br>
+                    <button class="btn btn-default" ng-click="fillExhibition(exhibit.id_exhibition, objectToAdd_id)">{{exhibit.title}}</button></br>
                     {{exhibit.description}}</br></br></br>
                 </div>
             </div>
