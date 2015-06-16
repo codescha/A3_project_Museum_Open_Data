@@ -94,6 +94,25 @@ app.post('/objects', function (req, res) {
     });
 });
 
+app.post('/favorites', function (req, res) {
+    var userId = req.body.userId || '';
+
+    if (userId == '') {
+        return res.send(401);
+    }
+
+    modelUsers.getFavorites(userId, function(data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok', favorites:data});
+            console.log(data);
+        } else {
+            console.log("Echec de la récupération du mot de passe pour l'utilisateur: " + userId);
+            return res.json({code: 'ko'});
+        }
+    });
+});
+
 app.get('/json/:file', function(req, res) {
   res.sendFile(path.join(__dirname+'/json/'+req.params.file));
 });

@@ -30,6 +30,8 @@
             </div>
         </div>
 
+
+
 		<div dir-paginate="object in objects | filter:{name:query} | orderBy:order | itemsPerPage:12" current-page="currentPage">
             <div class="col-md-4 text-center">
                 <div class="thumbnail">
@@ -51,6 +53,10 @@
                             </li>
                             <li><a  href="" ng-click="addFavorite(favorite.userId, favorite.itemId)"><i class="fa fa-2x fa-star"></i></a>
                             <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
+                                <div id="divalert{{object.id}}" ng-show="favoriteExists" class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    Oeuvre déjà ajouté
+                                </div>
                             </li>
                         </ul>
                     </div>

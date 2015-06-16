@@ -112,7 +112,7 @@ var getFavorites = function(userId, callback){
             if(err) {
                 console.error('error running query', err);
             }
-            callback(result.rowCount);
+            callback(result);
         });
     });
 }

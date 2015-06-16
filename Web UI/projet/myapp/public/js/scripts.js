@@ -180,11 +180,11 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                         UserService.favorite(userId, itemId).success(function (data) {
                             if(data.code =="exists"){
                                 $scope.favoriteExists = true;
+                                $window.alert($scope.favoriteExists);
                             }
                             else if (data.code == "ko") {
                                 console.log('erreur ajout aux favoris');
                             } else {
-                                $location.path("/");
                             }
                         }).error(function (status, data) {
                             console.log(status);
@@ -330,15 +330,17 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
             $scope.favorite = {
                 userId: '',
             }
+            var userId = $scope.favorite.userId;
 
-            $scope.favorite = function getFavorites(userId) {
+            $scope.getFavorites = function getFavorites(userId) {
                 if (userId !== undefined) {
 
                     UserService.getFavorites(userId).success(function (data) {
                         if(data.code == "ko"){
                             console.log('erreur récupération favoris');
                         } else {
-                            $location.path("/favorite");
+                            $scope.favorites = JSON.stringify(data.favorites.rows);
+                            console.log($scope.favorites);
                         }
                     }).error(function (status, data) {
                         console.log(status);
@@ -375,6 +377,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			},
             favorite: function(userId, itemId){
                 return $http.post('/objects', {userId: userId, itemId: itemId});
+            },
+            getFavorites: function(userId){
+                return $http.post('/favorites', {userId: userId});
             }
 		}
 	});
