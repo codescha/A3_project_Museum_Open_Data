@@ -7,20 +7,20 @@
 		</div>
 		<div class="row" ng-repeat="museum in museums">
 			<div class="col-md-7 img-portfolio">
-				<a href="#/museum/{{museum.id}}">
-	                <img class="img-responsive img-hover" src="http://placehold.it/700x300" alt="{{museum.name}}">
+				<a href="#/museum/{{museum.id_museum}}">
+	                <img class="img-responsive img-hover" src="http://placehold.it/700x300" alt="{{museum.display}}">
 	            </a>
 	        </div>
 	        <div class="col-md-5">
 				<h3>
-					<a href="#/museum/{{museum.id}}">{{museum.name}}
+					<a href="#/museum/{{museum.id_museum}}">{{museum.display}}
 					</a>
 				</h3>
 				<p>
 					{{museum.description}}
 					<br>
 				</p>
-				<a class="btn btn-primary" href="#/collections">Voir les collections</a>
+				<a class="btn btn-primary" href="#/collections/{{museum.id_museum}}">Voir les collections</a>
 			</div>
 		</div>
 	</div>

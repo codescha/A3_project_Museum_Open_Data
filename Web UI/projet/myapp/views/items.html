@@ -1,4 +1,4 @@
-<h3><a href="#/collections">Retour aux collections</a></h3><br>
+<h3><a href="#/collections/{{idm}}">Retour aux collections</a></h3><br>
 <div ng-show="loading">Chargement...</div>
 <div ng-hide="loading">
 
@@ -7,7 +7,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
         	
-			<h1>{{title}}</h1>
+			<h1>Objets</h1>
         </div>
         <div class="col-md-4">
 
@@ -22,8 +22,8 @@
                 <div>
                     Tri
                     <select ng-model="order" class="pull-right">
-                        <option value="name">par nom</option>
-                        <option value="object">par numéro d'inventaire</option>
+                        <option value="title">par nom</option>
+                        <option value="registry">par numéro d'inventaire</option>
                     </select>
                 </div>
                 <!-- /.input-group -->
@@ -32,20 +32,20 @@
 
 
 
-		<div dir-paginate="object in objects | filter:{name:query} | orderBy:order | itemsPerPage:12" current-page="currentPage">
+		<div dir-paginate="item in items | filter:{title:query} | orderBy:order | itemsPerPage:12" current-page="currentPage">
             <div class="col-md-4 text-center">
                 <div class="thumbnail">
-                    <a href="#/object/{{idc}}/{{object.id}}">
+                    <a href="#/item/{{idm}}/{{idc}}/{{item.id_item}}">
                         <img class="img-responsive" src="http://placehold.it/750x450" alt="">
                     </a>
                     <div class="caption">
-                            <a href="#/object/{{idc}}/{{object.id}}">
-                                <h3>{{object.name}}<br>
-                                    <small>{{object.registry}}</small>
+                            <a href="#/item/{{idm}}/{{idc}}/{{item.id_item}}">
+                                <h3>{{item.title}}<br>
+                                    <small>{{item.registry}}</small>
                                 </h3>
                             </a>
-                        <p>{{object.location}}</p>
-                        <p>{{object.date}}</p>
+                        <p>{{item.location}}</p>
+                        <p>{{item.date}}</p>
                         <ul class="list-inline">
                             <li><a href=""><i class="fa fa-2x fa-plus"></i></a>
                             </li>
@@ -53,8 +53,13 @@
                             </li>
                             <li>
                                 <a  href=""><i class="fa fa-2x fa-star"></i></a>
+<<<<<<< HEAD:Web UI/projet/myapp/views/objects.html
                                 <button class="btn btn-default"><a href="#/exhibitionList/{{object.id}}">Ajouter à une exposition virtuelle</a></button>
                                 <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
+=======
+                                <button class="btn btn-default"><a href="#/exhibitionList">Ajouter à une exposition virtuelle</a></button>
+                                <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, item.id_item)">Ajouter aux favoris</button>
+>>>>>>> get Museums, Collections and Items from DB:Web UI/projet/myapp/views/items.html
                             </li>
                         </ul>
                     </div>

@@ -9,14 +9,14 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				.when('/museum/:idm', {templateUrl: 'views/museum.html',
 					controller: 'MuseumCtrl',
 					access: {requiredLogin: false}})
-				.when('/collections', {templateUrl: 'views/collections.html',
+				.when('/collections/:idm', {templateUrl: 'views/collections.html',
 					controller: 'CollectionsCtrl',
 					access: {requiredLogin: false}})
-				.when('/objects/:id', {templateUrl: 'views/objects.html',
-					controller: 'ObjectsCtrl',
+				.when('/items/:idm/:idc', {templateUrl: 'views/items.html',
+					controller: 'ItemsCtrl',
 					access: {requiredLogin: false}})
-				.when('/object/:idc/:ido', {templateUrl: 'views/object.html',
-					controller: 'ObjectCtrl',
+				.when('/item/:idm/:idc/:ido', {templateUrl: 'views/item.html',
+					controller: 'ItemCtrl',
 					access: {requiredLogin: false}})
 				.when('/login', {templateUrl: './views/login.html',
 					controller: 'LoginCtrl',
@@ -67,48 +67,72 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 	app.factory('CollectionFactory', function($http, $q){
 		var factory = {
 			collections : false,
-			objects : false,
-			getCollections : function(){
+			getCollections : function(museumId){
 				var deferred = $q.defer();
-				if(factory.collections != false){
-					deferred.resolve(factory.collections);
-				} else {
-					$http.get('json/museumhavre.json')
+				//if(factory.collections != false){
+				//	deferred.resolve(factory.collections);
+				//} else {
+					//$http.get('json/museumhavre.json')
+					console.log("museumId : " + museumId);
+					$http.post('getCollectionsByMuseum', {museumId: museumId})
 							.success(function(data, status){
-								factory.collections = data;
+								factory.collections = data.collections;
 								deferred.resolve(factory.collections);
 							}).error(function(data, status){
 								deferred.reject('Erreur de chargement du fichier');
 							});
-				}
+				//}
 				return deferred.promise;
 			},
-			getCollection : function(id){
+			getCollection : function(idc){
 				var deferred = $q.defer();
 				var collection = {};
 				var collections = factory.getCollections().then(function(collections){
 					angular.forEach(factory.collections, function(value, key){
-						if(value.id == id){
+						if(value.id_collection == idc){
 							collection = value
 						}
 					});
 					deferred.resolve(collection);
-					factory.objects = collection.objects;
 				}, function(msg){
 					deferred.reject(msg);
 				});
 				return deferred.promise;
+			}
+		};
+		return factory;
+	})
+
+	app.factory('ItemFactory', function($http, $q){
+		var factory = {
+			items : false,
+			getItems : function(collectionId){
+				var deferred = $q.defer();
+				//if(factory.items != false){
+				//	deferred.resolve(factory.items);
+				//} else {
+					//$http.get('json/museumhavre.json')
+					console.log("collectionId : " + collectionId);
+					$http.post('getItemsByCollection', {collectionId: collectionId})
+							.success(function(data, status){
+								factory.items = data.items;
+								deferred.resolve(factory.items);
+							}).error(function(data, status){
+								deferred.reject('Erreur de chargement');
+							});
+				//}
+				return deferred.promise;
 			},
-			getObject : function(idc, ido){
+			getItem : function(collectionId, itemId){
 				var deferred=$q.defer();
-				var object = {};
-				var objects = factory.getCollection(idc).then(function(objects){
-					angular.forEach(factory.objects, function(value, key){
-						if(value.id == ido){
-							object = value
+				var item = {};
+				var items = factory.getItems(collectionId).then(function(items){
+					angular.forEach(factory.items, function(value, key){
+						if(value.id_item == itemId){
+							item = value
 						}
 					});
-					deferred.resolve(object);
+					deferred.resolve(item);
 				}, function(msg){
 					deferred.reject(msg);
 				});
@@ -126,9 +150,10 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				if(factory.museums != false){
 					deferred.resolve(factory.museums);
 				} else {
-					$http.get('json/museums.json')
+					//$http.get('json/museums.json')
+					$http.get('getAllMuseums')
 							.success(function(data, status){
-								factory.museums = data;
+								factory.museums = data.museums;
 								deferred.resolve(factory.museums);
 							}).error(function(data, status){
 								deferred.reject('Erreur de chargement du fichier');
@@ -141,7 +166,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				var museum = {};
 				var museums = factory.getMuseums().then(function(museums){
 					angular.forEach(factory.museums, function(value, key){
-						if(value.id == id){
+						if(value.id_museum == id){
 							museum = value
 						}
 					});
@@ -155,10 +180,11 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 		return factory;
 	})
 
-	app.controller('CollectionsCtrl', ['$scope', 'CollectionFactory',
-		function($scope, CollectionFactory) {
+	app.controller('CollectionsCtrl', ['$scope', 'CollectionFactory', '$routeParams',
+		function($scope, CollectionFactory, $routeParams) {
 			$scope.loading = true;
-			$scope.collections = CollectionFactory.getCollections().then(function(collections){
+			$scope.idm = $routeParams.idm;
+			$scope.collections = CollectionFactory.getCollections($routeParams.idm).then(function(collections){
 				$scope.loading = false;
 				$scope.collections = collections;
 			}, function(msg){
@@ -166,16 +192,16 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			});
 	}]);
 
-	app.controller('ObjectsCtrl', ['$scope', 'CollectionFactory', '$routeParams', 'UserService',
-        function($scope, CollectionFactory, $routeParams, UserService) {
+	app.controller('ItemsCtrl', ['$scope', 'ItemFactory', '$routeParams', 'UserService',
+        function($scope, ItemFactory, $routeParams, UserService) {
             $scope.currentPage = 1;
             $scope.pageSize = 12;
             $scope.loading = true;
-            var collection = CollectionFactory.getCollection($routeParams.id).then(function (collection) {
+            $scope.idc = $routeParams.idc;
+            $scope.idm = $routeParams.idm;
+            $scope.items = ItemFactory.getItems($routeParams.idc).then(function (items) {
                 $scope.loading = false;
-                $scope.idc = collection.id;
-                $scope.title = collection.name;
-                $scope.objects = collection.objects;
+                $scope.items = items;
             }, function (msg) {
                 alert(msg);
             });
@@ -211,13 +237,14 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 
         }]);
 
-	app.controller('ObjectCtrl', function($scope, CollectionFactory, $routeParams) {
+	app.controller('ItemCtrl', function($scope, ItemFactory, $routeParams) {
 		$scope.loading = true;
-		var object =  CollectionFactory.getObject($routeParams.idc, $routeParams.ido).then(function(object){
+            $scope.idc = $routeParams.idc;
+            $scope.idm = $routeParams.idm;
+            $scope.ido = $routeParams.ido;
+		var item =  ItemFactory.getItem($routeParams.idc, $routeParams.ido).then(function(item){
 			$scope.loading = false;
-			$scope.idc = $routeParams.idc;
-			$scope.ido = object.id;
-			$scope.object = object;
+			$scope.item = item;
 		}, function(msg){
 			alert(msg);
 		});
@@ -235,21 +262,29 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			});
 	}]);
 
+	app.filter('trusted', ['$sce', function ($sce) {
+	    return function(url) {
+	        return $sce.trustAsResourceUrl(url);
+	    };
+	}]);
+
 	app.controller('MuseumCtrl', function($scope, MuseumFactory, $routeParams) {
-	$scope.loading = true;
-	var museum =  MuseumFactory.getMuseum($routeParams.idm).then(function(museum){
-		$scope.loading = false;
-		$scope.museum = museum;
-	}, function(msg){
-		alert(msg);
-	});
 		$scope.loading = true;
+        $scope.idm = $routeParams.idm;
 		var museum =  MuseumFactory.getMuseum($routeParams.idm).then(function(museum){
 			$scope.loading = false;
 			$scope.museum = museum;
+			$scope.src = "https://maps.google.fr/maps?f=q&amp;source=s_q&amp;hl=fr&amp;geocode=&amp;q="+museum.name+"+"+museum.zipcode+"&amp;aq=0&amp;ie=UTF8&amp;t=m&amp;output=embed"
 		}, function(msg){
 			alert(msg);
 		});
+		function initialize() {
+			var mapProp = {
+				center:new google.maps.LatLng(51.508742,-0.120850), zoom:5, mapTypeId:google.maps.MapTypeId.ROADMAP
+			};
+			var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+		}
+		google.maps.event.addDomListener(window, 'load', initialize);
 
 	});
 
@@ -616,7 +651,7 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 				return $http.post('/subscribe', {firstname: firstname, lastname: lastname, email: email, password: password});
 			},
             favorite: function(userId, itemId){
-                return $http.post('/objects', {userId: userId, itemId: itemId});
+                return $http.post('/items', {userId: userId, itemId: itemId});
             },
             getFavorites: function(userId){
                 return $http.post('/favorites', {userId: userId});

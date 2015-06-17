@@ -25,6 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 var config = require('./config'); // get our config file
 /*** Chargement des models ***/
 var modelUsers = require('./models/users');
+var modelMuseums = require('./models/museums');
+
 
 
 /*** ROUTES ***/
@@ -77,7 +79,7 @@ app.post('/subscribe', function (req, res) {
     });
 });
 
-app.post('/objects', function (req, res) {
+app.post('/items', function (req, res) {
     var userId = req.body.userId;
     var itemId = req.body.itemId;
 
@@ -101,6 +103,79 @@ app.post('/objects', function (req, res) {
             })
         }
     });
+});
+
+app.get('/getAllMuseums', function(req, res) {
+  modelMuseums.getAllMuseums(function(data) {
+    console.log(data);
+    if(data != undefined) {
+      return res.json({code: 'ok', museums:data});
+    } else {
+      console.log("Aucun musée trouvé");
+      return res.json({code: "ko"});
+    }
+  });
+
+});
+
+app.get('/getAllCollections', function(req, res) {
+  modelMuseums.getAllCollections(function(data) {
+    console.log("app.js > getAllCollections " + data);
+    if(data != undefined) {
+      return res.json({code: 'ok', collections:data});
+    } else {
+      console.log("Aucune collection trouvée");
+      return res.json({code: "ko"});
+    }
+  });
+
+});
+
+app.post('/getCollectionsByMuseum', function (req, res) {
+    var museumId = req.body.museumId || '';
+
+    if (museumId == '') {
+        return res.send(401);
+    }
+    modelMuseums.getCollectionsByMuseum(museumId, function(data) {
+        console.log("app.js > getCollectionsByMuseum(" + museumId + ") .data : " + data);
+        if(data != undefined) {
+          return res.json({code: 'ok', collections:data});
+        } else {
+          console.log("Aucune collection trouvée");
+          return res.json({code: "ko"});
+        }
+    });
+});
+
+app.get('/getAllItems', function(req, res) {
+  modelMuseums.getAllItems(function(data) {
+    console.log(data);
+    if(data != undefined) {
+      return res.json({code: 'ok', items:data});
+    } else {
+      console.log("Aucun objet trouvé");
+      return res.json({code: "ko"});
+    }
+  });
+});
+
+app.post('/getItemsByCollection', function (req, res) {
+    var collectionId = req.body.collectionId || '';
+
+    if (collectionId == '') {
+        return res.send(401);
+    }
+    modelMuseums.getItemsByCollection(collectionId, function(data) {
+        console.log("app.js > getItemsByCollection(" + collectionId + ") .data : " + data);
+        if(data != undefined) {
+          return res.json({code: 'ok', items:data});
+        } else {
+          console.log("Aucun objet trouvé");
+          return res.json({code: "ko"});
+        }
+    });
+
 });
 
 app.post('/favorites', function (req, res) {

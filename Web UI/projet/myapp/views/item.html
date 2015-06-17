@@ -1,4 +1,4 @@
-<h3><a href="#/objects/{{idc}}">Retour aux objets</a></h3><br>
+<h3><a href="#/items/{{idm}}/{{idc}}">Retour aux objets</a></h3><br>
 <div ng-show="loading">Chargement...</div>
 <div ng-hide="loading">
 
@@ -7,7 +7,7 @@
         <!-- Blog Entries Column -->
         <div class="col-md-8">
         	
-			<h1>{{object.name}}</h1>
+			<h1>{{item.title}}</h1>
         </div>
 
         <div class="col-md-8">
@@ -42,13 +42,15 @@
 
             <div class="col-md-4">
                 <h3>Description</h3>
+                <p>{{item.description}}</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                 <h3>Détails</h3>
                 <ul>
-                    <li>Inventaire : {{object.registry}}</li>
-                    <li>Espèce : {{object.kind}}</li>
-                    <li>Lieu : {{object.location}}</li>
-                    <li>Période : {{object.date}}</li>
+                    <li>Inventaire : {{item.registry}}</li>
+                    <li>Genre : {{item.kind}}</li>
+                    <li>Espèce : {{item.species}}</li>
+                    <li>Lieu : {{item.location}}</li>
+                    <li>Période : {{item.date}}</li>
                 </ul>
             </div>
         
