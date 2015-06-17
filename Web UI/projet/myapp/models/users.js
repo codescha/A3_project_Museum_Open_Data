@@ -160,16 +160,29 @@ var exhibitionList = function(userId, callback){
         if(err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query('SELECT * FROM t_exhibitions WHERE user_id_user = $1', [userId], function(err, result) {
-            //call `done()` to release the client back to the pool
-            done();
-            console.log(err);
-            console.log(result);
-            if(err) {
-                console.error('error running query', err);
-            }
-            callback(result);
-        });
+        if(userId == "all"){
+            client.query('SELECT * FROM t_exhibitions INNER JOIN t_user ON t_user.id_user = t_exhibitions.user_id_user ORDER BY t_user.id_user', function(err, result) {
+                //call `done()` to release the client back to the pool
+                done();
+                console.log(err);
+                console.log(result);
+                if(err) {
+                    console.error('error running query', err);
+                }
+                callback(result);
+            });
+        } else {
+            client.query('SELECT * FROM t_exhibitions WHERE user_id_user = $1', [userId], function(err, result) {
+                //call `done()` to release the client back to the pool
+                done();
+                console.log(err);
+                console.log(result);
+                if(err) {
+                    console.error('error running query', err);
+                }
+                callback(result);
+            });
+        }
     });
 }
 

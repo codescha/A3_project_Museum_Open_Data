@@ -42,6 +42,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				.when('/objectsInExhibition/:exhibit_id', {templateUrl: './views/objectsInExhibition.html',
 					controller: 'objectsInExhibitionCtrl',
 					access: {requiredLogin: true}})
+				.when('/allExhibitions', {templateUrl: './views/allExhibitions.html',
+					controller: 'allExhibitionsCtrl',
+					access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
 	});
 
@@ -446,7 +449,7 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
         }
     ]);
 
-app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window',
+	app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window',
     function($scope, $routeParams, UserService, $http, $window) {
 
         $scope.exhibitionList = function exhibitionList(userId) {
@@ -487,6 +490,28 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
         }
 
     }]);
+
+
+	app.controller('allExhibitionsCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window',
+	function($scope, $routeParams, UserService, $http, $window) {
+
+		$scope.allExhibitions = function allExhibitions() {
+			UserService.allExhibitions().success(function (data) {
+				if (data.code == "ko") {
+					console.log('erreur');
+				} else {
+					console.log(data);
+					$scope.exhibitions = data.exhibitions;
+				}
+			}).error(function (status, data) {
+				console.log(status);
+				console.log(data);
+			});
+		};
+
+		$scope.allExhibitions();
+
+	}]);
 
 	app.factory('AuthenticationService', function() {
 		var auth = {
@@ -535,6 +560,9 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
 			},
 			deleteExhibitionItem: function(exhibitionId, itemId){
 				return $http.post('/deleteExhibitionItem', {exhibitionId: exhibitionId, itemId: itemId});
+			},
+			allExhibitions: function(){
+				return $http.get('/allExhibitions');
 			}
 		}
 	});

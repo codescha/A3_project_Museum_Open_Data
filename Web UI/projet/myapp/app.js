@@ -243,6 +243,19 @@ app.post('/objectsInExhibition', function (req, res) {
 
 });
 
+app.get('/allExhibitions', function (req, res) {
+    modelUsers.exhibitionList("all", function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok', exhibitions:data.rows});
+            console.log(data.rows);
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+});
+
 app.get('/json/:file', function(req, res) {
   res.sendFile(path.join(__dirname+'/json/'+req.params.file));
 });
