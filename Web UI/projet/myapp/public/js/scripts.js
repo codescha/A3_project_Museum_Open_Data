@@ -39,7 +39,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                 .when('/exhibitionList/:item_id', {templateUrl: './views/exhibitionList.html',
                     controller: 'exhibitionListCtrl',
                     access: {requiredLogin: true}})
-				.when('/objectsInExhibition/:exhibit_id', {templateUrl: './views/objectsInExhibition.html',
+				.when('/objectsInExhibition/:usertype/:exhibit_id', {templateUrl: './views/objectsInExhibition.html',
 					controller: 'objectsInExhibitionCtrl',
 					access: {requiredLogin: true}})
 				.when('/allExhibitions', {templateUrl: './views/allExhibitions.html',
@@ -365,6 +365,12 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 
 		$scope.exhibitionChosen_id = $routeParams.exhibit_id;
 		console.log($scope.exhibitionChosen_id);
+
+		if($routeParams.usertype == 'mine'){
+			$scope.showButton = true;
+		}else{
+			$scope.showButton = false;
+		}
 
 		$scope.objectsInExhibition = function (exhibition_id) {
 			if (exhibition_id !== undefined) {
