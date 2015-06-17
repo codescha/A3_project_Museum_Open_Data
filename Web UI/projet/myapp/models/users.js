@@ -199,7 +199,7 @@ var fillExhibition = function(exhibitionId, itemId, callback) {
             if(err) {
                 return console.error('error fetching client from pool', err);
             }
-            client.query('SELECT t_item.id_item, t_item.title, t_item.description FROM t_item INNER JOIN t_item_exhibition ON t_item_exhibition.item_id_item = t_item.id_item WHERE t_item_exhibition.exhibition_id_exhibition = $1', [exhibitionId], function(err, result) {
+            client.query('SELECT t_item.id_item, t_item.title, t_item.description, t_exhibitions.title AS exhibitionTitle FROM t_item INNER JOIN t_item_exhibition ON t_item_exhibition.item_id_item = t_item.id_item INNER JOIN t_exhibitions ON t_exhibitions.id_exhibition = t_item_exhibition.exhibition_id_exhibition WHERE t_item_exhibition.exhibition_id_exhibition = $1', [exhibitionId], function(err, result) {
                 //call `done()` to release the client back to the pool
                 done();
                 console.log(err);

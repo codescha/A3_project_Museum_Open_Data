@@ -1,0 +1,29 @@
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Mes expositions virtuelles ({{exhibition.length}})</h1>
+            <a class="btn btn-primary" href="#/createExhibition">Créer une exposition</a></br></br>
+
+            <div  ng-repeat="exhibit in exhibition">
+                <div class="col-md-4 text-center">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <a href="#/objectsInExhibition/{{exhibit.id_exhibition}}">
+                                <h3>{{exhibit.title}}</h3>
+                            </a>
+                            <p>{{exhibit.description}}</p>
+                            <ul class="list-inline">
+                                <li>
+                                    <button type="button" class="btn btn-default" ng-click="">Supprimer exposition</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

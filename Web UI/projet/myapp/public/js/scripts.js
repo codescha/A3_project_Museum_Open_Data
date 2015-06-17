@@ -433,7 +433,7 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
         }
 
         $scope.exhibitionList($scope.$parent.userInfos.id_user);
-        $scope.objectToAdd_id = $routeParams.exhibit_id;
+        $scope.objectToAdd_id = $routeParams.item_id;
         console.log($scope.objectToAdd_id);
 
         $scope.fillExhibition = function fillExhibition(exhibitionId, itemId) {
