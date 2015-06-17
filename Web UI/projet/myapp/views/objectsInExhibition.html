@@ -1,0 +1,29 @@
+
+<div class="container">
+
+   	<div class="row">
+        <div class="col-lg-12">
+            <h1>{{exhibitionChosen_id}}</h1>
+
+            <div  ng-repeat="object in objects track by object.id_item">
+                <div class="col-md-4 text-center">
+                    <div class="thumbnail">
+                        <a href="#/object/{{idc}}/{{object.id_item}}">
+                            <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                        </a>
+                        <div class="caption">
+                            <a href="#/object/{{idc}}/{{fav.id_item}}">
+                                <h3>{{object.title}}</h3>
+                            </a>
+                            <ul class="list-inline">
+                                <li>
+                                    <button type="button" class="btn btn-default" ng-click="">Supprimer oeuvre de l'exposition</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

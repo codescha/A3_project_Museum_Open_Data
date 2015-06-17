@@ -182,6 +182,28 @@ app.post('/fillExhibition', function (req, res) {
 
 });
 
+app.post('/objectsInExhibition', function (req, res) {
+    var exhibitionId = req.body.exhibition_id || '';
+
+    console.log("ID EXPO" + exhibitionId);
+
+    if (exhibitionId == '') {
+        return res.sendStatus(401);
+    }
+
+    modelUsers.objectsInExhibition(exhibitionId, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok', objects:data.rows});
+            console.log(data);
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+
+});
+
 app.get('/json/:file', function(req, res) {
   res.sendFile(path.join(__dirname+'/json/'+req.params.file));
 });

@@ -39,6 +39,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                 .when('/exhibitionList/:item_id', {templateUrl: './views/exhibitionList.html',
                     controller: 'exhibitionListCtrl',
                     access: {requiredLogin: true}})
+				.when('/objectsInExhibition/:exhibit_id', {templateUrl: './views/objectsInExhibition.html',
+					controller: 'objectsInExhibitionCtrl',
+					access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
 	});
 
@@ -349,6 +352,38 @@ app.controller('createExhibitionCtrl', ['$scope', '$location', '$window', 'UserS
     }
 ]);
 
+app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$routeParams', '$http',
+	function objectsInExhibitionCtrl($scope, $location, $window, UserService, AuthenticationService, $routeParams, $http) {
+		$scope.exhibition_id = {
+			exhibition_id: ''
+		}
+
+		var exhibition_id = $scope.exhibition_id.exhibition_id;
+
+		$scope.exhibitionChosen_id = $routeParams.exhibit_id;
+		console.log($scope.exhibitionChosen_id);
+
+		$scope.objectsInExhibition = function (exhibition_id) {
+			if (exhibition_id !== undefined) {
+
+				UserService.objectsInExhibition(exhibition_id).success(function (data) {
+					if(data.code == "ko"){
+						console.log('erreur');
+					} else {
+						$scope.objects = data.objects;
+						console.log($scope.objects);
+					}
+				}).error(function (status, data) {
+					console.log(status);
+					console.log(data);
+				});
+			}
+		};
+
+		$scope.objectsInExhibition($scope.exhibitionChosen_id);
+	}
+]);
+
     app.controller('UserCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
         function UserCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
 
@@ -398,7 +433,7 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
         }
 
         $scope.exhibitionList($scope.$parent.userInfos.id_user);
-        $scope.objectToAdd_id = $routeParams.item_id;
+        $scope.objectToAdd_id = $routeParams.exhibit_id;
         console.log($scope.objectToAdd_id);
 
         $scope.fillExhibition = function fillExhibition(exhibitionId, itemId) {
@@ -458,7 +493,10 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
             },
             fillExhibition: function(exhibitionId, itemId){
                 return $http.post('/fillExhibition', {exhibitionId: exhibitionId, itemId: itemId});
-            }
+            },
+			objectsInExhibition: function(exhibition_id){
+				return $http.post('/objectsInExhibition', {exhibition_id: exhibition_id});
+			}
 		}
 	});
 

@@ -173,24 +173,44 @@ var exhibitionList = function(userId, callback){
     });
 }
 
-var fillExhibition = function(exhibitionId, itemId, callback){
+var fillExhibition = function(exhibitionId, itemId, callback) {
 
-    pg.connect(config.conString, function(err, client, done) {
-        if(err) {
+    pg.connect(config.conString, function (err, client, done) {
+        if (err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query('INSERT INTO t_item_exhibition (item_id_item, exhibition_id_exhibition) VALUES ($1, $2)', [itemId, exhibitionId], function(err, result) {
+        client.query('INSERT INTO t_item_exhibition (item_id_item, exhibition_id_exhibition) VALUES ($1, $2)', [itemId, exhibitionId], function (err, result) {
             //call `done()` to release the client back to the pool
             done();
             console.log(err);
             console.log(result);
-            if(err) {
+            if (err) {
                 console.error('error running query', err);
             }
             callback(result);
         });
     });
 }
+
+
+    var objectsInExhibition = function(exhibitionId, callback){
+
+        pg.connect(config.conString, function(err, client, done) {
+            if(err) {
+                return console.error('error fetching client from pool', err);
+            }
+            client.query('SELECT t_item.id_item, t_item.title, t_item.description FROM t_item INNER JOIN t_item_exhibition ON t_item_exhibition.item_id_item = t_item.id_item WHERE t_item_exhibition.exhibition_id_exhibition = $1', [exhibitionId], function(err, result) {
+                //call `done()` to release the client back to the pool
+                done();
+                console.log(err);
+                console.log(result);
+                if(err) {
+                    console.error('error running query', err);
+                }
+                callback(result);
+            });
+        });
+    }
 
 exports.subscribe = subscribe;
 exports.login = login;
@@ -201,3 +221,4 @@ exports.checkMail = checkMail;
 exports.createExhibition = createExhibition;
 exports.exhibitionList = exhibitionList;
 exports.fillExhibition = fillExhibition;
+exports.objectsInExhibition = objectsInExhibition;
