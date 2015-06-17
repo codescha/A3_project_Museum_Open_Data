@@ -197,6 +197,7 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                             else if (data.code == "ko") {
                                 console.log('erreur ajout aux favoris');
                             } else {
+								alert("Favoris ajouté");
                             }
                         }).error(function (status, data) {
                             console.log(status);
@@ -497,11 +498,16 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
         $scope.exhibitionList($scope.$parent.userInfos.id_user);
         $scope.objectToAdd_id = $routeParams.item_id;
         console.log($scope.objectToAdd_id);
+		$scope.itemExists = false;
 
         $scope.fillExhibition = function fillExhibition(exhibitionId, itemId) {
             if (exhibitionId !== undefined && itemId !== undefined) {
                 UserService.fillExhibition(exhibitionId, itemId).success(function (data) {
-                    if (data.code == "ko") {
+					if(data.code =="exists"){
+						$scope.itemExists = true;
+						alert("Oeuvre deja ajoutee a l'exposition !");
+					}
+                    else if (data.code == "ko") {
                         console.log('erreur');
                         alert('Oeuvre déjà ajoutée à l\'exposition');
                     } else {

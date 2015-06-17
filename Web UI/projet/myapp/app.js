@@ -148,7 +148,7 @@ app.post('/deleteExhibition', function (req, res) {
     if (userId == '' || exhibitionId == '' ) {
         return res.send(401);
     }
-   
+
     modelUsers.deleteExhibition(userId, exhibitionId, function(data){
         console.log(data);
         if (data != undefined) {
@@ -228,15 +228,25 @@ app.post('/fillExhibition', function (req, res) {
         return res.send(401);
     }
 
-    modelUsers.fillExhibition(exhibitionId, itemId, function (data) {
+    modelUsers.checkItemInExhibition(itemId, exhibitionId, function(data){
         console.log(data);
         if (data != undefined) {
-            return res.json({code: 'ok'});
+            console.log("L'objet " + itemId +  " est déjà ajouté à cette exposition");
+            return res.json({code:'exists'});
         } else {
-            console.log("Echec");
-            return res.json({code: 'ko'});
+            modelUsers.fillExhibition(exhibitionId, itemId, function (data) {
+            console.log(data);
+            if (data != undefined) {
+                return res.json({code: 'ok'});
+            } else {
+                console.log("Echec");
+                return res.json({code: 'ko'});
+            }
+        });
         }
     });
+
+
 
 });
 

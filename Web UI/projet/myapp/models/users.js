@@ -39,6 +39,24 @@ var checkMail = function(mail, callback){
     });
 }
 
+var checkItemInExhibition = function(itemId, exhibitionId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('SELECT * FROM t_item_exhibition WHERE item_id_item=$1 AND exhibition_id_exhibition=$2', [itemId, exhibitionId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rows[0]);
+        });
+    });
+}
+
 var subscribe = function(firstname, lastname, mail, password, callback){
     var hashedPassword = sha1(password);
 
@@ -295,3 +313,5 @@ exports.objectsInExhibition = objectsInExhibition;
 exports.deleteFavorite = deleteFavorite;
 exports.deleteExhibitionItem = deleteExhibitionItem;
 exports.deleteExhibition = deleteExhibition;
+exports.checkItemInExhibition = checkItemInExhibition;
+
