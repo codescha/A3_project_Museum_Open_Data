@@ -352,8 +352,8 @@ app.controller('createExhibitionCtrl', ['$scope', '$location', '$window', 'UserS
     }
 ]);
 
-app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$routeParams', '$http',
-	function objectsInExhibitionCtrl($scope, $location, $window, UserService, AuthenticationService, $routeParams, $http) {
+app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$routeParams', '$http', '$route',
+	function objectsInExhibitionCtrl($scope, $location, $window, UserService, AuthenticationService, $routeParams, $http, $route) {
 		$scope.exhibition_id = {
 			exhibition_id: ''
 		}
@@ -381,6 +381,23 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 		};
 
 		$scope.objectsInExhibition($scope.exhibitionChosen_id);
+
+		$scope.deleteExhibitionItem = function (exhibitionId, itemId) {
+			if (exhibitionId !== undefined && itemId !== undefined) {
+
+				UserService.deleteExhibitionItem(exhibitionId, itemId).success(function (data) {
+					if(data.code == "ko"){
+						console.log('erreur');
+					} else {
+						alert("Suppression effectuée");
+						$route.reload();
+					}
+				}).error(function (status, data) {
+					console.log(status);
+					console.log(data);
+				});
+			}
+		};
 	}
 ]);
 
@@ -390,8 +407,8 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
         }
     ]);
 
-    app.controller('FavoriteCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http',
-        function FavoriteCtrl($scope, $location, $window, UserService, AuthenticationService, $http) {
+    app.controller('FavoriteCtrl', ['$scope', '$location', '$window', 'UserService', 'AuthenticationService', '$http', '$route',
+        function FavoriteCtrl($scope, $location, $window, UserService, AuthenticationService, $http,$route) {
 
             $scope.getFavorites = function (userId) {
                 if (userId !== undefined) {
@@ -410,6 +427,22 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
             };
 
             $scope.getFavorites($scope.$parent.userInfos.id_user);
+
+			$scope.deleteFavorite = function deleteFavorite(userId, itemId) {
+				if (userId !== undefined && itemId !== undefined) {
+					UserService.deleteFavorite(userId, itemId).success(function (data) {
+						if (data.code == "ko") {
+							console.log('erreur suppression favoris');
+						} else {
+							alert("Supression effectuée");
+							$route.reload();
+						}
+					}).error(function (status, data) {
+						console.log(status);
+						console.log(data);
+					});
+				}
+			};
         }
     ]);
 
@@ -496,6 +529,12 @@ app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '
             },
 			objectsInExhibition: function(exhibition_id){
 				return $http.post('/objectsInExhibition', {exhibition_id: exhibition_id});
+			},
+			deleteFavorite: function(userId, itemId){
+				return $http.post('/deleteFavorite', {userId: userId, itemId: itemId});
+			},
+			deleteExhibitionItem: function(exhibitionId, itemId){
+				return $http.post('/deleteExhibitionItem', {exhibitionId: exhibitionId, itemId: itemId});
 			}
 		}
 	});

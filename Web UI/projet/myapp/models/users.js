@@ -212,6 +212,44 @@ var fillExhibition = function(exhibitionId, itemId, callback) {
         });
     }
 
+var deleteFavorite = function(userId, itemId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('DELETE FROM t_favorite WHERE user_id_user=$1 AND item_id_item=$2', [userId, itemId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rowCount);
+        });
+    });
+}
+
+var deleteExhibitionItem = function(exhibitionId, itemId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('DELETE FROM t_item_exhibition WHERE exhibition_id_exhibition=$1 AND item_id_item=$2', [exhibitionId, itemId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rowCount);
+        });
+    });
+}
+
 exports.subscribe = subscribe;
 exports.login = login;
 exports.favorite = favorite;
@@ -222,3 +260,5 @@ exports.createExhibition = createExhibition;
 exports.exhibitionList = exhibitionList;
 exports.fillExhibition = fillExhibition;
 exports.objectsInExhibition = objectsInExhibition;
+exports.deleteFavorite = deleteFavorite;
+exports.deleteExhibitionItem = deleteExhibitionItem;

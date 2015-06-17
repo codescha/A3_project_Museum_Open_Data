@@ -119,6 +119,45 @@ app.post('/favorites', function (req, res) {
             return res.json({code: 'ko'});
         }
     });
+
+});
+
+app.post('/deleteFavorite', function (req, res) {
+    var userId = req.body.userId;
+    var itemId = req.body.itemId;
+
+    if (userId == '' || itemId == '' ) {
+        return res.send(401);
+    }
+
+    modelUsers.deleteFavorite(userId, itemId, function(data){
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code:'ok'});
+        } else {
+            return res.json({code:'ko'});
+        }
+    });
+
+});
+
+app.post('/deleteExhibitionItem', function (req, res) {
+    var exhibitionId = req.body.exhibitionId;
+    var itemId = req.body.itemId;
+
+    if (exhibitionId == '' || itemId == '' ) {
+        return res.send(401);
+    }
+
+    modelUsers.deleteExhibitionItem(exhibitionId, itemId, function(data){
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code:'ok'});
+        } else {
+            return res.json({code:'ko'});
+        }
+    });
+
 });
 
 app.post('/createExhibition', function (req, res) {

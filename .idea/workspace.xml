@@ -24,8 +24,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="195" column="32" selection-start-line="195" selection-start-column="32" selection-end-line="195" selection-end-column="32" />
+            <state vertical-scroll-proportion="-12.689655">
+              <caret line="151" column="48" selection-start-line="151" selection-start-column="48" selection-end-line="151" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -35,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/exhibitionList.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="116" selection-start-line="9" selection-start-column="116" selection-end-line="9" selection-end-column="116" />
+              <caret line="9" column="114" selection-start-line="9" selection-start-column="100" selection-end-line="9" selection-end-column="114" />
               <folding />
             </state>
           </provider>
@@ -44,8 +44,8 @@
       <file leaf-file-name="users.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/models/users.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.724138">
-              <caret line="201" column="121" selection-start-line="201" selection-start-column="121" selection-end-line="201" selection-end-column="121" />
+            <state vertical-scroll-proportion="-7.724138">
+              <caret line="239" column="106" selection-start-line="239" selection-start-column="106" selection-end-line="239" selection-end-column="106" />
               <folding />
             </state>
           </provider>
@@ -71,11 +71,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="favorites.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.423077">
+              <caret line="19" column="145" selection-start-line="19" selection-start-column="145" selection-end-line="19" selection-end-column="145" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="objectsInExhibition.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+            <state vertical-scroll-proportion="-11.769231">
+              <caret line="18" column="136" selection-start-line="18" selection-start-column="136" selection-end-line="18" selection-end-column="136" />
               <folding />
             </state>
           </provider>
@@ -86,16 +96,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="collections.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/collections.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.153846">
-              <caret line="14" column="19" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -114,8 +114,8 @@
       <file leaf-file-name="scripts.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.56439394">
-              <caret line="435" column="52" selection-start-line="435" selection-start-column="52" selection-end-line="435" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.49242425">
+              <caret line="387" column="49" selection-start-line="387" selection-start-column="49" selection-end-line="387" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -134,15 +134,15 @@
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/user.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/json/museumhavre.json" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/subscribe.html" />
-        <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/create_exhibition.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/objects.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/user_exhibitions.html" />
-        <option value="$PROJECT_DIR$/Web UI/projet/myapp/app.js" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/index.html" />
-        <option value="$PROJECT_DIR$/Web UI/projet/myapp/models/users.js" />
-        <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/exhibitionList.html" />
+        <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html" />
+        <option value="$PROJECT_DIR$/Web UI/projet/myapp/models/users.js" />
+        <option value="$PROJECT_DIR$/Web UI/projet/myapp/app.js" />
+        <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js" />
       </list>
     </option>
@@ -481,7 +481,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14136904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.04389881" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.078431375" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -847,14 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.576923">
-          <caret line="25" column="18" selection-start-line="7" selection-start-column="12" selection-end-line="25" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/home.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.8846154">
@@ -879,14 +871,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/allExhibitions.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/objects.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.8846154">
@@ -903,26 +887,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html">
+    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+        <state vertical-scroll-proportion="-12.423077">
+          <caret line="19" column="145" selection-start-line="19" selection-start-column="145" selection-end-line="19" selection-end-column="145" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="195" column="32" selection-start-line="195" selection-start-column="32" selection-end-line="195" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/models/users.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.724138">
-          <caret line="201" column="121" selection-start-line="201" selection-start-column="121" selection-end-line="201" selection-end-column="121" />
+        <state vertical-scroll-proportion="-12.689655">
+          <caret line="151" column="48" selection-start-line="151" selection-start-column="48" selection-end-line="151" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -930,15 +906,39 @@
     <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/exhibitionList.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="116" selection-start-line="9" selection-start-column="116" selection-end-line="9" selection-end-column="116" />
+          <caret line="9" column="114" selection-start-line="9" selection-start-column="100" selection-end-line="9" selection-end-column="114" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/allExhibitions.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.769231">
+          <caret line="18" column="136" selection-start-line="18" selection-start-column="136" selection-end-line="18" selection-end-column="136" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/models/users.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.724138">
+          <caret line="239" column="106" selection-start-line="239" selection-start-column="106" selection-end-line="239" selection-end-column="106" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56439394">
-          <caret line="435" column="52" selection-start-line="435" selection-start-column="52" selection-end-line="435" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.49242425">
+          <caret line="387" column="49" selection-start-line="387" selection-start-column="49" selection-end-line="387" selection-end-column="49" />
           <folding />
         </state>
       </provider>
