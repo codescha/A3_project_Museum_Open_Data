@@ -455,8 +455,8 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
         }
     ]);
 
-	app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window',
-    function($scope, $routeParams, UserService, $http, $window) {
+	app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window', '$route',
+    function($scope, $routeParams, UserService, $http, $window, $route) {
 
         $scope.exhibitionList = function exhibitionList(userId) {
             if (userId !== undefined) {
@@ -473,6 +473,26 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
                 });
             }
         }
+
+
+		$scope.deleteExhibition = function deleteExhibition(userId, exhibitionId) {
+			if (userId !== undefined && exhibitionId !== undefined) {
+				UserService.deleteExhibition(userId,exhibitionId).success(function (data) {
+					if (data.code == "ko") {
+						console.log('erreur');
+					} else {
+						console.log(data);
+						console.log(userId);
+						console.log(exhibitionId);
+						alert("Exposition supprimée");
+						$route.reload();
+					}
+				}).error(function (status, data) {
+					console.log(status);
+					console.log(data);
+				});
+			}
+		}
 
         $scope.exhibitionList($scope.$parent.userInfos.id_user);
         $scope.objectToAdd_id = $routeParams.item_id;
@@ -569,6 +589,9 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 			},
 			allExhibitions: function(){
 				return $http.get('/allExhibitions');
+			},
+			deleteExhibition: function(userId, exhibitionId){
+				return $http.post('/deleteExhibition', {userId: userId, exhibitionId: exhibitionId});
 			}
 		}
 	});

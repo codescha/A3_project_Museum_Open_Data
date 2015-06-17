@@ -244,6 +244,25 @@ var deleteFavorite = function(userId, itemId, callback){
     });
 }
 
+var deleteExhibition = function(userId, exhibitionId, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('DELETE FROM t_exhibitions WHERE user_id_user=$1 AND id_exhibition=$2', [userId, exhibitionId], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rowCount);
+        });
+    });
+}
+
 var deleteExhibitionItem = function(exhibitionId, itemId, callback){
 
     pg.connect(config.conString, function(err, client, done) {
@@ -275,3 +294,4 @@ exports.fillExhibition = fillExhibition;
 exports.objectsInExhibition = objectsInExhibition;
 exports.deleteFavorite = deleteFavorite;
 exports.deleteExhibitionItem = deleteExhibitionItem;
+exports.deleteExhibition = deleteExhibition;

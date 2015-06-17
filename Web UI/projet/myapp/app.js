@@ -141,6 +141,25 @@ app.post('/deleteFavorite', function (req, res) {
 
 });
 
+app.post('/deleteExhibition', function (req, res) {
+    var userId = req.body.userId;
+    var exhibitionId = req.body.exhibitionId;
+
+    if (userId == '' || exhibitionId == '' ) {
+        return res.send(401);
+    }
+   
+    modelUsers.deleteExhibition(userId, exhibitionId, function(data){
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code:'ok'});
+        } else {
+            return res.json({code:'ko'});
+        }
+    });
+
+});
+
 app.post('/deleteExhibitionItem', function (req, res) {
     var exhibitionId = req.body.exhibitionId;
     var itemId = req.body.itemId;
