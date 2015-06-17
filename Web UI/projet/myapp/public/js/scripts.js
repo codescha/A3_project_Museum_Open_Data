@@ -45,6 +45,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				.when('/allExhibitions', {templateUrl: './views/allExhibitions.html',
 					controller: 'allExhibitionsCtrl',
 					access: {requiredLogin: true}})
+				.when('/modifyExhibition/:exhibitionId', {templateUrl: './views/modifyExhibition.html',
+					controller: 'modifyExhibitionCtrl',
+					access: {requiredLogin: true}})
 				.otherwise({redirectTo : '/'});
 	});
 
@@ -476,6 +479,8 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
         }
 
 
+
+
 		$scope.deleteExhibition = function deleteExhibition(userId, exhibitionId) {
 			if (userId !== undefined && exhibitionId !== undefined) {
 				UserService.deleteExhibition(userId,exhibitionId).success(function (data) {
@@ -523,6 +528,47 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 
     }]);
 
+		app.controller('modifyExhibitionCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window', '$route', '$location',
+			function($scope, $routeParams, UserService, $http, $window, $route, $location) {
+
+				$scope.exhibitToUpdate = $routeParams.exhibitionId;
+
+				console.log($scope.exhibitToUpdate);
+				$scope.getExhibitionInfo = function getExhibitionInfo(exhibitionId) {
+					if (exhibitionId !== undefined) {
+						UserService.getExhibitionInfo(exhibitionId).success(function (data) {
+							if (data.code == "ko") {
+								console.log('erreur');
+							} else {
+								console.log(data);
+								$scope.modifyExhibition = data.exhibition;
+							}
+						}).error(function (status, data) {
+							console.log(status);
+							console.log(data);
+						});
+					}
+				}
+
+				$scope.getExhibitionInfo($scope.exhibitToUpdate);
+
+				$scope.updateExhibition = function updateExhibition(exhibitionId, exhibitionTitle, exhibitionDescription) {
+					if (exhibitionId !== undefined && exhibitionTitle !== undefined && exhibitionDescription !== undefined) {
+						UserService.updateExhibition(exhibitionId, exhibitionTitle, exhibitionDescription).success(function (data) {
+							if (data.code == "ko") {
+								console.log('erreur');
+							} else {
+								console.log(data);
+								$location.path("/user_exhibitions");
+							}
+						}).error(function (status, data) {
+							console.log(status);
+							console.log(data);
+						});
+					}
+				}
+
+			}]);
 
 	app.controller('allExhibitionsCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window',
 	function($scope, $routeParams, UserService, $http, $window) {
@@ -598,6 +644,12 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 			},
 			deleteExhibition: function(userId, exhibitionId){
 				return $http.post('/deleteExhibition', {userId: userId, exhibitionId: exhibitionId});
+			},
+			getExhibitionInfo: function(exhibitionId){
+				return $http.post('/getExhibitionInfo', {exhibitionId: exhibitionId});
+			},
+			updateExhibition: function (exhibitionId, exhibitionTitle, exhibitionDescription){
+				return $http.post('/updateExhibition', {exhibitionId: exhibitionId, exhibitionTitle: exhibitionTitle, exhibitionDescription: exhibitionDescription});
 			}
 		}
 	});

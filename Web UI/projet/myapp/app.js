@@ -237,7 +237,7 @@ app.post('/fillExhibition', function (req, res) {
             modelUsers.fillExhibition(exhibitionId, itemId, function (data) {
             console.log(data);
             if (data != undefined) {
-                return res.json({code: 'ok'});
+                return res.json({code: 'ok', exhibition:data.rows});
             } else {
                 console.log("Echec");
                 return res.json({code: 'ko'});
@@ -277,6 +277,38 @@ app.get('/allExhibitions', function (req, res) {
         console.log(data);
         if (data != undefined) {
             return res.json({code: 'ok', exhibitions:data.rows});
+            console.log(data.rows);
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+});
+
+app.post('/getExhibitionInfo', function (req, res) {
+    var exhibitionId = req.body.exhibitionId || '';
+
+    modelUsers.getExhibitionInfo(exhibitionId, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok', exhibition:data.rows[0]});
+            console.log(data.rows);
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+});
+
+app.post('/updateExhibition', function (req, res) {
+    var exhibitionId = req.body.exhibitionId || '';
+    var exhibitionTitle = req.body.exhibitionTitle || '';
+    var exhibitionDescription = req.body.exhibitionDescription || '';
+
+    modelUsers.updateExhibition(exhibitionId, exhibitionTitle, exhibitionDescription, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok'});
             console.log(data.rows);
         } else {
             console.log("Echec");

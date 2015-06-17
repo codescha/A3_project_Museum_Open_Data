@@ -223,6 +223,25 @@ var fillExhibition = function(exhibitionId, itemId, callback) {
     });
 }
 
+var getExhibitionInfo = function(exhibitionId, callback) {
+
+    pg.connect(config.conString, function (err, client, done) {
+        if (err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('SELECT * FROM t_exhibitions WHERE id_exhibition=$1', [exhibitionId], function (err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if (err) {
+                console.error('error running query', err);
+            }
+            callback(result);
+        });
+    });
+}
+
 
     var objectsInExhibition = function(exhibitionId, callback){
 
@@ -300,6 +319,25 @@ var deleteExhibitionItem = function(exhibitionId, itemId, callback){
     });
 }
 
+var updateExhibition = function(exhibitionId, exhibitionTitle, exhibitionDescription, callback){
+
+    pg.connect(config.conString, function(err, client, done) {
+        if(err) {
+            return console.error('error fetching client from pool', err);
+        }
+        client.query('UPDATE t_exhibitions SET title=$2, description=$3 where id_exhibition=$1', [exhibitionId, exhibitionTitle, exhibitionDescription], function(err, result) {
+            //call `done()` to release the client back to the pool
+            done();
+            console.log(err);
+            console.log(result);
+            if(err) {
+                console.error('error running query', err);
+            }
+            callback(result.rowCount);
+        });
+    });
+}
+
 exports.subscribe = subscribe;
 exports.login = login;
 exports.favorite = favorite;
@@ -314,4 +352,5 @@ exports.deleteFavorite = deleteFavorite;
 exports.deleteExhibitionItem = deleteExhibitionItem;
 exports.deleteExhibition = deleteExhibition;
 exports.checkItemInExhibition = checkItemInExhibition;
-
+exports.getExhibitionInfo = getExhibitionInfo;
+exports.updateExhibition = updateExhibition;

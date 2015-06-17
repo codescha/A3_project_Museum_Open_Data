@@ -1,0 +1,27 @@
+<h1>Modifier mon exposition virtuelle</h1>
+
+
+<form name="exhibition_form" class="form-horizontal col-sm-4 col-sm-offset-4" role="form">
+
+    <div class="form-group">
+        <label for="inputTitle" class="control-label">Titre</label>
+        <div>
+            <input required type="text" class="form-control" id="inputTitle" ng-model="modifyExhibition.title" />
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="inputDescription" class="control-label">Description</label>
+        <div>
+            <textarea required class="form-control" id="inputDescription" ng-model="modifyExhibition.description" rows="10"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div>
+            <button type="submit" class="btn btn-default" ng-click="updateExhibition(exhibitToUpdate, modifyExhibition.title, modifyExhibition.description)">Valider</button>
+        </div>
+    </div>
+
+</form>
