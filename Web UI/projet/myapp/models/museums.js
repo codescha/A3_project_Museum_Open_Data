@@ -91,8 +91,28 @@ var getAllItems = function(callback){
     });
 }
 
+var getMuseumByCollection = function(collectionId, callback){
+    pg.connect(config.conString, function(err, client, done) {
+        console.log("COLLECTION ID" +collectionId);
+        if(err){
+            return console.error('error connecting db', err);
+        }
+        client.query('SELECT DISTINCT t_collection.* FROM t_collection INNER JOIN t_item ON t_item.collection_id_collection=t_collection.id_collection WHERE t_item.collection_id_collection=$1', [collectionId], function(err, result){
+            done();
+            console.log(err);
+            console.log(result);
+
+            if(err){
+                console.error('error running query', err);
+            }
+            callback(result);
+        });
+    });
+}
+
 exports.getAllMuseums = getAllMuseums;
 exports.getAllItems = getAllItems;
 exports.getAllCollections = getAllCollections;
 exports.getItemsByCollection = getItemsByCollection;
 exports.getCollectionsByMuseum = getCollectionsByMuseum;
+exports.getMuseumByCollection = getMuseumByCollection;

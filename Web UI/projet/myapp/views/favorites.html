@@ -8,13 +8,16 @@
             <div  ng-repeat="fav in favorites track by fav.id_item">
                 <div class="col-md-4 text-center">
                     <div class="thumbnail">
-                        <a href="#/item/{{idm}}/{{idc}}/{{fav.id_item}}">
+                        <a href="#/item/{{idm}}/{{fav.collection_id_collection}}/{{fav.id_item}}">
                             <img class="img-responsive" src="http://placehold.it/750x450" alt="">
                         </a>
                         <div class="caption">
-                            <a href="#/item/{{idm}}/{{idc}}/{{fav.id_item}}">
-                                <h3>{{fav.title}}</h3>
+                            <button ng-click="getMuseumByCollection(fav.id_item, fav.collection_id_collection)">{{fav.title}}</button><a>
+                                <h3><br>
+                                    <small>{{fav.registry}}</small></h3>
                             </a>
+                            <p>{{fav.location}}</p>
+                            <p>{{fav.date}}</p>
                             <ul class="list-inline">
                                 <li>
                                     <button type="button" class="btn btn-default" ng-click="deleteFavorite($parent.userInfos.id_user, fav.id_item)">Supprimer favoris</button>

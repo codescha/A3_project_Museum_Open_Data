@@ -516,7 +516,33 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 					});
 				}
 			};
-        }
+			$scope.collectionId = {
+				collectionId: ''
+			}
+
+			var collectionId = $scope.collectionId.collectionId;
+			$scope.getMuseumByCollection = function getMuseumByCollection(itemId, collectionId) {
+				console.log(collectionId);
+				if (collectionId !== undefined && itemId !== undefined) {
+					UserService.getMuseumByCollection(collectionId).success(function (data) {
+						if (data.code == "ko") {
+							console.log('erreur');
+						} else {
+							console.log("DATA"+data);
+							$scope.museum = data.museum;
+							console.log($scope.museum);
+							console.log("id musee" +$scope.museum.museum_id_museum);
+							console.log("id coll" +$scope.favorites.collection_id_collection);
+							console.log("id item" +$scope.favorites.id_item);
+							$location.path("/item/"+$scope.museum.museum_id_museum+"/"+$scope.museum.id_collection+"/"+itemId);
+						}
+					}).error(function (status, data) {
+						console.log(status);
+						console.log(data);
+					});
+				}
+			};
+		}
     ]);
 
 	app.controller('exhibitionListCtrl', ['$scope', '$routeParams', 'UserService', '$http', '$window', '$route',
@@ -710,6 +736,9 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 			},
 			updateExhibition: function (exhibitionId, exhibitionTitle, exhibitionDescription){
 				return $http.post('/updateExhibition', {exhibitionId: exhibitionId, exhibitionTitle: exhibitionTitle, exhibitionDescription: exhibitionDescription});
+			},
+			getMuseumByCollection: function(collectionId){
+				return $http.post('/getMuseumByCollection', {collectionId: collectionId});
 			}
 		}
 	});

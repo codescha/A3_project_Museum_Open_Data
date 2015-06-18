@@ -140,7 +140,7 @@ var getFavorites = function(userId, callback){
         if(err) {
             return console.error('error fetching client from pool', err);
         }
-        client.query('SELECT t_item.id_item, t_item.title, t_item.description FROM t_item INNER JOIN t_favorite ON t_favorite.item_id_item = t_item.id_item WHERE t_favorite.user_id_user = $1', [userId], function(err, result) {
+        client.query('SELECT t_item.id_item, t_item.title, t_item.description, t_item.registry, t_item.kind, t_item.species, t_item.location, t_item.date, t_item.collection_id_collection FROM t_item INNER JOIN t_favorite ON t_favorite.item_id_item = t_item.id_item WHERE t_favorite.user_id_user = $1', [userId], function(err, result) {
             //call `done()` to release the client back to the pool
             done();
             console.log(err);
@@ -152,6 +152,7 @@ var getFavorites = function(userId, callback){
         });
     });
 }
+
 
 var createExhibition = function(title, description, userId, callback){
 
@@ -249,7 +250,7 @@ var getExhibitionInfo = function(exhibitionId, callback) {
             if(err) {
                 return console.error('error fetching client from pool', err);
             }
-            client.query('SELECT t_item.id_item, t_item.title, t_item.description, t_exhibitions.title AS exhibitionTitle FROM t_item INNER JOIN t_item_exhibition ON t_item_exhibition.item_id_item = t_item.id_item INNER JOIN t_exhibitions ON t_exhibitions.id_exhibition = t_item_exhibition.exhibition_id_exhibition WHERE t_item_exhibition.exhibition_id_exhibition = $1', [exhibitionId], function(err, result) {
+            client.query('SELECT t_item.id_item, t_item.title, t_item.description, t_item.registry, t_item.kind, t_item.species, t_item.location, t_item.date, t_item.collection_id_collection, t_exhibitions.title AS exhibitionTitle FROM t_item INNER JOIN t_item_exhibition ON t_item_exhibition.item_id_item = t_item.id_item INNER JOIN t_exhibitions ON t_exhibitions.id_exhibition = t_item_exhibition.exhibition_id_exhibition WHERE t_item_exhibition.exhibition_id_exhibition = $1', [exhibitionId], function(err, result) {
                 //call `done()` to release the client back to the pool
                 done();
                 console.log(err);

@@ -7,13 +7,17 @@
                 <div  ng-repeat="object in objects track by object.id_item">
                     <div class="col-md-4 text-center">
                         <div class="thumbnail">
-                            <a href="#/item/{{idm}}/{{idc}}/{{object.id_item}}">
+                            <a href="#/item/{{idm}}/{{object.collection_id_collection}}/{{object.id_item}}">
                                 <img class="img-responsive" src="http://placehold.it/750x450" alt="">
                             </a>
                             <div class="caption">
-                                <a href="#/item/{{idm}}/{{idc}}/{{object.id_item}}">
-                                    <h3>{{object.title}}</h3>
+                                <a href="#/item/{{idm}}/{{object.collection_id_collection}}/{{object.id_item}}">
+                                    <h3>{{object.title}}<br>
+                                    <small>{{object.registry}}</small>
+                                    </h3>
                                 </a>
+                                <p>{{object.location}}</p>
+                                <p>{{object.date}}</p>
                                 <ul class="list-inline" ng-show="showButton">
                                     <li>
                                         <button type="button"  class="btn btn-default" ng-click="deleteExhibitionItem(exhibitionChosen_id, object.id_item)">Supprimer l'oeuvre de l'exposition</button>

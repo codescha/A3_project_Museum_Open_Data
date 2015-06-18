@@ -392,6 +392,22 @@ app.post('/updateExhibition', function (req, res) {
     });
 });
 
+app.post('/getMuseumByCollection', function (req, res) {
+    var collectionId = req.body.collectionId || '';
+
+console.log("COLLECTION" +collectionId);
+    modelMuseums.getMuseumByCollection(collectionId, function (data) {
+        console.log(data);
+        if (data != undefined) {
+            return res.json({code: 'ok', museum:data.rows[0]});
+            console.log(data.rows[0]);
+        } else {
+            console.log("Echec");
+            return res.json({code: 'ko'});
+        }
+    });
+});
+
 app.get('/json/:file', function(req, res) {
   res.sendFile(path.join(__dirname+'/json/'+req.params.file));
 });
