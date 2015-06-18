@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-md-3 well">
                     Nom
-                    <br/><input type="text" ng-model="querytitle" class="pull-center">
+                    <br/><input type="text" ng-model="querytitle" class="pull-right">
                 </div>
                 <div class="col-md-3 well">
                     Numéro d'inventaire
@@ -74,12 +74,8 @@
                         <p>{{item.location}}</p>
                         <p>{{item.date}}</p>
                         <ul class="list-inline">
-                            <li><a href=""><i class="fa fa-2x fa-plus"></i></a>
-                            </li>
-                            <li><a href=""><i class="fa fa-2x fa-share"></i></a>
-                            </li>
+
                             <li>
-                                <a  href=""><i class="fa fa-2x fa-star"></i></a>
                                 <button class="btn btn-default"><a href="#/exhibitionList/{{object.id}}">Ajouter à une exposition virtuelle</a></button>
                                 <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
                             </li>
