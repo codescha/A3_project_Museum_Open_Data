@@ -44,10 +44,10 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
                     access: {requiredLogin: true}})
 				.when('/objectsInExhibition/:usertype/:exhibit_id', {templateUrl: './views/objectsInExhibition.html',
 					controller: 'objectsInExhibitionCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/allExhibitions', {templateUrl: './views/allExhibitions.html',
 					controller: 'allExhibitionsCtrl',
-					access: {requiredLogin: true}})
+					access: {requiredLogin: false}})
 				.when('/modifyExhibition/:exhibitionId', {templateUrl: './views/modifyExhibition.html',
 					controller: 'modifyExhibitionCtrl',
 					access: {requiredLogin: true}})

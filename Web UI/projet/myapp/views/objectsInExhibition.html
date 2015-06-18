@@ -7,13 +7,13 @@
                 <div  ng-repeat="object in objects track by object.id_item">
                     <div class="col-md-4 text-center">
                         <div class="thumbnail">
-                            <a href="#/item/{{idm}}/{{object.collection_id_collection}}/{{object.id_item}}">
+                            <a>
                                 <img class="img-responsive" src="http://placehold.it/750x450" alt="">
                             </a>
                             <div class="caption">
-                                <button class="btn btn-default" ng-click="getMuseumByCollection(object.id_item, object.collection_id_collection)">{{object.title}}</button><a>
+                                <button class="btn btn-default" ng-click="getMuseumByCollection(object.id_item, object.collection_id_collection)">Voir l'objet</button><a>
 
-                            <a href="#/item/{{idm}}/{{object.collection_id_collection}}/{{object.id_item}}">
+                            <a>
                                     <h3>{{object.title}}<br>
                                     <small>{{object.registry}}</small>
                                     </h3>
