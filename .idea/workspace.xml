@@ -61,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="favorites.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="favorites.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37972167">
-              <caret line="14" column="81" selection-start-line="14" selection-start-column="81" selection-end-line="14" selection-end-column="81" />
+            <state vertical-scroll-proportion="-7.3461537">
+              <caret line="14" column="30" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -84,8 +84,8 @@
       <file leaf-file-name="objectsInExhibition.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3461537">
-              <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+            <state vertical-scroll-proportion="-3.4230769">
+              <caret line="7" column="54" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -101,11 +101,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scripts.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="scripts.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.232143">
-              <caret line="511" column="125" selection-start-line="511" selection-start-column="125" selection-end-line="511" selection-end-column="125" />
+            <state vertical-scroll-proportion="0.39957717">
+              <caret line="464" column="80" selection-start-line="464" selection-start-column="80" selection-end-line="464" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -132,12 +132,12 @@
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/modifyExhibition.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/items.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/subscribe.html" />
-        <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/models/users.js" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/app.js" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/models/museums.js" />
-        <option value="$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js" />
         <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html" />
+        <option value="$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html" />
+        <option value="$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js" />
       </list>
     </option>
   </component>
@@ -901,26 +901,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js">
+    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.232143">
-          <caret line="511" column="125" selection-start-line="511" selection-start-column="125" selection-end-line="511" selection-end-column="125" />
+        <state vertical-scroll-proportion="-7.3461537">
+          <caret line="14" column="30" selection-start-line="14" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/objectsInExhibition.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3461537">
-          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        <state vertical-scroll-proportion="-3.4230769">
+          <caret line="7" column="54" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/views/favorites.html">
+    <entry file="file://$PROJECT_DIR$/Web UI/projet/myapp/public/js/scripts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37972167">
-          <caret line="14" column="81" selection-start-line="14" selection-start-column="81" selection-end-line="14" selection-end-column="81" />
+        <state vertical-scroll-proportion="0.39957717">
+          <caret line="464" column="80" selection-start-line="464" selection-start-column="80" selection-end-line="464" selection-end-column="80" />
           <folding />
         </state>
       </provider>

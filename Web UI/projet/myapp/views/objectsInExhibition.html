@@ -11,7 +11,9 @@
                                 <img class="img-responsive" src="http://placehold.it/750x450" alt="">
                             </a>
                             <div class="caption">
-                                <a href="#/item/{{idm}}/{{object.collection_id_collection}}/{{object.id_item}}">
+                                <button class="btn btn-default" ng-click="getMuseumByCollection(object.id_item, object.collection_id_collection)">{{object.title}}</button><a>
+
+                            <a href="#/item/{{idm}}/{{object.collection_id_collection}}/{{object.id_item}}">
                                     <h3>{{object.title}}<br>
                                     <small>{{object.registry}}</small>
                                     </h3>

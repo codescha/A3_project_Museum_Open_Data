@@ -471,6 +471,31 @@ app.controller('objectsInExhibitionCtrl', ['$scope', '$location', '$window', 'Us
 				});
 			}
 		};
+
+		$scope.collectionId = {
+			collectionId: ''
+		}
+
+		var collectionId = $scope.collectionId.collectionId;
+		$scope.getMuseumByCollection = function getMuseumByCollection(itemId, collectionId) {
+			console.log(collectionId);
+			if (collectionId !== undefined && itemId !== undefined) {
+				UserService.getMuseumByCollection(collectionId).success(function (data) {
+					if (data.code == "ko") {
+						console.log('erreur');
+					} else {
+						console.log("DATA"+data);
+						$scope.museum = data.museum;
+						console.log($scope.museum);
+						console.log("id musee" +$scope.museum.museum_id_museum);
+						$location.path("/item/"+$scope.museum.museum_id_museum+"/"+$scope.museum.id_collection+"/"+itemId);
+					}
+				}).error(function (status, data) {
+					console.log(status);
+					console.log(data);
+				});
+			}
+		};
 	}
 ]);
 
