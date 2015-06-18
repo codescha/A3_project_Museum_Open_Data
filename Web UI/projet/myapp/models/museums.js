@@ -81,7 +81,7 @@ var getAllItems = function(callback){
         client.query('SELECT * FROM t_item', function(err, result){
             done();
             console.log(err);
-            console.log(result);
+            //console.log(result);
 
             if(err){
                 console.error('error running query', err);

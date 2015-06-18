@@ -18,6 +18,9 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 				.when('/item/:idm/:idc/:ido', {templateUrl: 'views/item.html',
 					controller: 'ItemCtrl',
 					access: {requiredLogin: false}})
+				.when('/allItems', {templateUrl: 'views/allItems.html',
+					controller: 'AllItemsCtrl',
+					access: {requiredLogin: false}})
 				.when('/login', {templateUrl: './views/login.html',
 					controller: 'LoginCtrl',
 					access: {requiredLogin: false}})
@@ -106,6 +109,17 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 	app.factory('ItemFactory', function($http, $q){
 		var factory = {
 			items : false,
+			getAllItems : function(){
+				var deferred = $q.defer();
+				$http.get('getAllItems')
+						.success(function(data, status){
+							factory.items = data.items;
+							deferred.resolve(factory.items);
+						}).error(function(data, status){
+							deferred.reject('Erreur de chargement du fichier');
+						});
+				return deferred.promise;
+			},
 			getItems : function(collectionId){
 				var deferred = $q.defer();
 				//if(factory.items != false){
@@ -250,6 +264,17 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 		});
 
 	});
+
+	app.controller('AllItemsCtrl', ['$scope', 'ItemFactory',
+		function($scope, ItemFactory) {
+			$scope.loading = true;
+			$scope.items = ItemFactory.getAllItems().then(function(items){
+				$scope.loading = false;
+				$scope.items = items;
+			}, function(msg){
+				console.log(msg);
+			});
+	}]);
 
 	app.controller('MuseumsCtrl', ['$scope', 'MuseumFactory',
 		function($scope, MuseumFactory) {

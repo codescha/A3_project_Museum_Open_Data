@@ -150,7 +150,7 @@ app.post('/getCollectionsByMuseum', function (req, res) {
 
 app.get('/getAllItems', function(req, res) {
   modelMuseums.getAllItems(function(data) {
-    console.log(data);
+    //console.log(data);
     if(data != undefined) {
       return res.json({code: 'ok', items:data});
     } else {

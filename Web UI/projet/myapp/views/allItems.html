@@ -1,0 +1,97 @@
+<div ng-show="loading">Chargement...</div>
+<div ng-hide="loading">
+
+	<div class="row">
+
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+        	
+			<h1>Objets</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <!-- Blog Search Well -->
+            <h3>Options de recherche :</h3>
+            <div class="row">
+                <div class="col-md-3 well">
+                    Nom
+                    <br/><input type="text" ng-model="querytitle" class="pull-center">
+                </div>
+                <div class="col-md-3 well">
+                    Numéro d'inventaire
+                    <br/><input type="text" ng-model="queryregistry" class="pull-right">
+                </div>
+                <div class="col-md-3 well">
+                    Description
+                    <br/><input type="text" ng-model="querydescription" class="pull-right">
+                </div>
+                <div class="col-md-3 well">
+                    Genre
+                    <br/><input type="text" ng-model="querykind" class="pull-right">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 well">
+                    Espèce
+                    <br/><input type="text" ng-model="queryspecies" class="pull-right">
+                </div>
+                <div class="col-md-3 well">
+                    Lieu
+                    <br/><input type="text" ng-model="querylocation" class="pull-right">
+                </div>
+                <div class="col-md-3 well">
+                    Date
+                    <br/><input type="text" ng-model="querydate" class="pull-right">
+                </div>
+                <div class="col-md-3 well">
+                    Ordonner
+                    <br/>
+                    <select ng-model="order" class="pull-right">
+                        <option value="title">par nom</option>
+                        <option value="registry">par numéro d'inventaire</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+		<div dir-paginate="item in items | filter:{title:querytitle} | filter:{registry:queryregistry} | filter:{description:querydescription} | filter:{kind:querykind} | filter:{species:queryspecies} | filter:{location:querylocation} | filter:{date:querydate} | orderBy:order | itemsPerPage:12" current-page="currentPage">
+            <div class="col-md-4 text-center">
+                <div class="thumbnail">
+                    <a href="#/item/{{idm}}/{{idc}}/{{item.id_item}}">
+                        <img class="img-responsive" src="http://placehold.it/750x450" alt="">
+                    </a>
+                    <div class="caption">
+                            <a href="#/item/{{idm}}/{{idc}}/{{item.id_item}}">
+                                <h3>{{item.title}}<br>
+                                    <small>{{item.registry}}</small>
+                                </h3>
+                            </a>
+                        <p>{{item.location}}</p>
+                        <p>{{item.date}}</p>
+                        <ul class="list-inline">
+                            <li><a href=""><i class="fa fa-2x fa-plus"></i></a>
+                            </li>
+                            <li><a href=""><i class="fa fa-2x fa-share"></i></a>
+                            </li>
+                            <li>
+                                <a  href=""><i class="fa fa-2x fa-star"></i></a>
+                                <button class="btn btn-default"><a href="#/exhibitionList/{{object.id}}">Ajouter à une exposition virtuelle</a></button>
+                                <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>			
+		</div>		
+    </div>
+	<div class="other-controller">
+        <div class="text-center">
+            <dir-pagination-controls boundary-links="true" template-url="views/dirPagination.tpl.html"></dir-pagination-controls>
+        </div>
+	</div>
+</div>
