@@ -265,8 +265,8 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 
 	});
 
-	app.controller('AllItemsCtrl', ['$scope', 'ItemFactory',
-		function($scope, ItemFactory) {
+	app.controller('AllItemsCtrl', ['$scope', 'ItemFactory', 'UserService', '$location',
+		function($scope, ItemFactory, UserService, $location) {
 			$scope.loading = true;
 			$scope.items = ItemFactory.getAllItems().then(function(items){
 				$scope.loading = false;
@@ -274,6 +274,31 @@ var app = angular.module('MODapp', ['ngRoute', 'ui.bootstrap', 'angularUtils.dir
 			}, function(msg){
 				console.log(msg);
 			});
+
+			$scope.collectionId = {
+				collectionId: ''
+			}
+
+			var collectionId = $scope.collectionId.collectionId;
+			$scope.getMuseumByCollection = function getMuseumByCollection(itemId, collectionId) {
+				console.log(collectionId);
+				if (collectionId !== undefined && itemId !== undefined) {
+					UserService.getMuseumByCollection(collectionId).success(function (data) {
+						if (data.code == "ko") {
+							console.log('erreur');
+						} else {
+							console.log("DATA"+data);
+							$scope.museum = data.museum;
+							console.log($scope.museum);
+							console.log("id musee" +$scope.museum.museum_id_museum);
+							$location.path("/item/"+$scope.museum.museum_id_museum+"/"+$scope.museum.id_collection+"/"+itemId);
+						}
+					}).error(function (status, data) {
+						console.log(status);
+						console.log(data);
+					});
+				}
+			};
 	}]);
 
 	app.controller('MuseumsCtrl', ['$scope', 'MuseumFactory',

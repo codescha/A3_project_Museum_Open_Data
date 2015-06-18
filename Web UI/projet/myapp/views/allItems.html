@@ -66,11 +66,11 @@
                         <img class="img-responsive" src="http://placehold.it/750x450" alt="">
                     </a>
                     <div class="caption">
-                            <a href="#/item/{{idm}}/{{idc}}/{{item.id_item}}">
-                                <h3>{{item.title}}<br>
-                                    <small>{{item.registry}}</small>
-                                </h3>
-                            </a>
+                            <button class="btn btn-default" ng-click="getMuseumByCollection(item.id_item, item.collection_id_collection)">Voir l'objet</button>
+
+                            <h3>{{item.title}}<br>
+                                <small>{{item.registry}}</small>
+                            </h3>
                         <p>{{item.location}}</p>
                         <p>{{item.date}}</p>
                         <ul class="list-inline">
