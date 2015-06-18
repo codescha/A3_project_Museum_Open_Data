@@ -47,14 +47,9 @@
                         <p>{{item.location}}</p>
                         <p>{{item.date}}</p>
                         <ul class="list-inline">
-                            <li><a href=""><i class="fa fa-2x fa-plus"></i></a>
-                            </li>
-                            <li><a href=""><i class="fa fa-2x fa-share"></i></a>
-                            </li>
                             <li>
-                                <a  href=""><i class="fa fa-2x fa-star"></i></a>
-                                <button class="btn btn-default"><a href="#/exhibitionList/{{object.id}}">Ajouter à une exposition virtuelle</a></button>
-                                <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, object.id)">Ajouter aux favoris</button>
+                                <button class="btn btn-default"><a href="#/exhibitionList/{{item.id_item}}">Ajouter à une exposition virtuelle</a></button>
+                                <button type="button" class="btn btn-default" ng-click="favorite($parent.userInfos.id_user, item.id_item)">Ajouter aux favoris</button>
                             </li>
                         </ul>
                     </div>
